@@ -2,5 +2,9 @@
   "appTitle": "task_for_irene",
   "@appTitle": {
     "description": "The title of the application"
-  }
+  },
+  "settingsViewTitle": "Settings",
+  "settingsViewSystemTheme": "System Theme",
+  "settingsViewLightTheme": "Light Theme",
+  "settingsViewDarkTheme": "Dark Theme"
 }
