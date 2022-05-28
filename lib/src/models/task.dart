@@ -1,4 +1,5 @@
 class Task {
+  int id = 0; //??
   String title;
   String description;
   DateTime dueDate;
@@ -31,3 +32,19 @@ class StatusTask {
   static const completed = "completed";
   static const surrender = "surrender";
 }
+
+List<Task> testTasks = [
+  Task.newTask(
+      'title1',
+      'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
+      DateTime.now(),
+      ReminderFrequency()),
+  Task.newTask(
+      'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
+      'description2',
+      DateTime.now(),
+      ReminderFrequency()),
+  Task.newTask('title3', 'description3', DateTime.now(), ReminderFrequency()),
+  Task.newTask('title4', 'description4', DateTime.now(), ReminderFrequency()),
+  Task.newTask('title5', 'description5', DateTime.now(), ReminderFrequency())
+];

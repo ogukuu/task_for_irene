@@ -6,5 +6,6 @@
   "settingsViewTitle": "Settings",
   "settingsViewSystemTheme": "System Theme",
   "settingsViewLightTheme": "Light Theme",
-  "settingsViewDarkTheme": "Dark Theme"
+  "settingsViewDarkTheme": "Dark Theme",
+  "activeTasksListViewTitle": "Active tasks"
 }
