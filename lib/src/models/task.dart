@@ -4,7 +4,7 @@ class Task {
   String description;
   DateTime dueDate;
   dynamic photoProof;
-  ReminderFrequency reminderFrequency;
+  ReminderFrequency reminderFrequency; //?
   String status;
 
   Task(this.title, this.description, this.dueDate, this.reminderFrequency,
@@ -31,20 +31,28 @@ class StatusTask {
   static const active = "active";
   static const completed = "completed";
   static const surrender = "surrender";
+  static const fail = "fail";
 }
 
 List<Task> testTasks = [
-  Task.newTask(
+  Task(
       'title1',
       'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
       DateTime.now(),
-      ReminderFrequency()),
-  Task.newTask(
+      ReminderFrequency(),
+      StatusTask.active,
+      null),
+  Task(
       'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
       'description2',
       DateTime.now(),
-      ReminderFrequency()),
-  Task.newTask('title3', 'description3', DateTime.now(), ReminderFrequency()),
-  Task.newTask('title4', 'description4', DateTime.now(), ReminderFrequency()),
-  Task.newTask('title5', 'description5', DateTime.now(), ReminderFrequency())
+      ReminderFrequency(),
+      StatusTask.active,
+      null),
+  Task('title3', 'description3', DateTime.now(), ReminderFrequency(),
+      StatusTask.completed, null),
+  Task('title4', 'description4', DateTime.now(), ReminderFrequency(),
+      StatusTask.surrender, null),
+  Task('title5', 'description5', DateTime.now(), ReminderFrequency(),
+      StatusTask.fail, null)
 ];

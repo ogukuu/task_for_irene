@@ -17,10 +17,11 @@ class ActiveTaskCard extends StatelessWidget {
             child: Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(10),
-              child: Text(
-                _task.title,
-                overflow: TextOverflow.ellipsis,
-              ),
+              child: Text(_task.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: DefaultTextStyle.of(context)
+                      .style
+                      .apply(fontSizeFactor: 1.3)),
             ),
           ),
           Expanded(
@@ -29,17 +30,16 @@ class ActiveTaskCard extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.all(10),
                 child: Text("due date: ${formatDate(_task.dueDate)}")),
-          ),
+          )
         ],
       ),
       const Divider(height: 0, indent: 10, endIndent: 10),
       Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.all(10),
-          child: Text(_task.description,
-              style: DefaultTextStyle.of(context)
-                  .style
-                  .apply(fontSizeFactor: 1.3)))
+          child: Text(
+            _task.description,
+          ))
     ]));
   }
 }

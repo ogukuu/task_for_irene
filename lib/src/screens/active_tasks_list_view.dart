@@ -27,10 +27,8 @@ class ActiveTasksListView extends StatelessWidget {
       body: ListView.builder(
         restorationId: 'activeTasksListView',
         itemCount: _tasks.length,
-        itemBuilder: (BuildContext context, int index) {
-          final item = _tasks[index];
-          return ActiveTaskCard(item);
-        },
+        itemBuilder: (BuildContext context, int index) =>
+            ActiveTaskCard(_tasks[index]),
       ),
     );
   }
