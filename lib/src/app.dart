@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import 'models/task.dart';
@@ -11,12 +12,14 @@ import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    Key? key,
-    required this.settingsController,
-  }) : super(key: key);
+  const MyApp(
+      {Key? key,
+      required this.settingsController,
+      required this.calendarController})
+      : super(key: key);
 
   final SettingsController settingsController;
+  final CalendarController calendarController;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,9 @@ class MyApp extends StatelessWidget {
         return TasksView(testTasks);
       case SampleItemListView.routeName:
       default:
-        return CalendarView(testTasks); //const SampleItemListView();
+        return CalendarView(testTasks,
+            calendarController:
+                calendarController); //const SampleItemListView();
     }
   }
 }

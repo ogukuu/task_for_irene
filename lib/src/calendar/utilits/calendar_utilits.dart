@@ -43,4 +43,35 @@ class CalendarUtilits {
         return 0;
     }
   }
+
+  static String getNameMonth(int month) {
+    switch (month) {
+      case DateTime.january:
+        return "january";
+      case DateTime.february:
+        return "february";
+      case DateTime.march:
+        return "march";
+      case DateTime.april:
+        return "april";
+      case DateTime.may:
+        return "may";
+      case DateTime.june:
+        return "june";
+      case DateTime.july:
+        return "july";
+      case DateTime.august:
+        return "august";
+      case DateTime.september:
+        return "september";
+      case DateTime.october:
+        return "october";
+      case DateTime.november:
+        return "november";
+      case DateTime.december:
+        return "december";
+      default:
+        return "";
+    }
+  }
 }

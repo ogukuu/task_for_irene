@@ -2,7 +2,7 @@ import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 
 class CurrentPeriod {
   late final List<DateTime> _dates;
-  get dates => _dates;
+  List<DateTime> get dates => _dates;
 
   List<DateTime> getExtendedMonthDates(int firstDayOfTheWeek) {
     if (periodType == PeriodType.day ||
@@ -15,7 +15,7 @@ class CurrentPeriod {
     DateTime tempDay;
     tempDay = _dates.first;
     while (tempDay.weekday != firstDayOfTheWeek) {
-      tempDay.subtract(const Duration(days: 1));
+      tempDay = tempDay.subtract(const Duration(days: 1));
       tempDates.insert(0, tempDay);
     }
     tempDay = _dates.last;
@@ -23,7 +23,7 @@ class CurrentPeriod {
         ? DateTime.daysPerWeek
         : (firstDayOfTheWeek - 1);
     while (tempDay.weekday != lastDayOfTheWeek) {
-      tempDay.add(const Duration(days: 1));
+      tempDay = tempDay.add(const Duration(days: 1));
       tempDates.add(tempDay);
     }
     return tempDates;

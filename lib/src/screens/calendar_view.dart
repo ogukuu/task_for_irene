@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/calendar/calendar.dart';
+import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import '../models/task.dart';
@@ -9,7 +11,8 @@ import 'misc/completed_task_card.dart';
 import 'misc/my_floating_action_button.dart';
 
 class CalendarView extends StatelessWidget {
-  CalendarView(this._tasks, {Key? key}) : super(key: key) {
+  CalendarView(this._tasks, {Key? key, required this.calendarController})
+      : super(key: key) {
     _tasks.sort(((a, b) {
       return a.dueDate.compareTo(b.dueDate);
     }));
@@ -17,6 +20,7 @@ class CalendarView extends StatelessWidget {
 
   static const routeName = '/calendar';
   final List<Task> _tasks;
+  final CalendarController calendarController;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,7 @@ class CalendarView extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
             childCount: _tasks.length + 2,
             (context, index) {
-              if (index == 0) return const Text('calendar');
+              if (index == 0) return Calendar(controller: calendarController);
               if (index == 1) return const Divider();
               if (_tasks[index - 2].status == StatusTask.active) {
                 return ActiveTaskCard(_tasks[index - 2]);

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
 
-class Calendar extends StatefulWidget {
-  Calendar({Key? key, this.firstDayOfTheWeek = FirstDayOfTheWeek.monday})
-      : super(key: key);
-  final FirstDayOfTheWeek firstDayOfTheWeek;
-  PeriodType calendarFormType = PeriodType.month;
+import 'forms/day/calendar_day_form.dart';
+import 'forms/month/calendar_month_form.dart';
+import 'forms/year/calendar_year_form.dart';
 
-  @override
-  State<Calendar> createState() => _CalendarState();
-}
+class Calendar extends StatelessWidget {
+  const Calendar({Key? key, required this.controller}) : super(key: key);
+  final CalendarController controller;
 
-class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    switch (controller.period.periodType) {
+      case PeriodType.year:
+        return CalendarYearForm(controller: controller);
+      case PeriodType.day:
+        return CalendarDayForm(controller: controller);
+      case PeriodType.month:
+      default:
+        return CalendarMonthForm(controller: controller);
+    }
   }
 }
