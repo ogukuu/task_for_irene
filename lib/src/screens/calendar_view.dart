@@ -4,10 +4,16 @@ import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import '../models/task.dart';
 import '../settings/settings_view.dart';
+import 'misc/active_task_card.dart';
+import 'misc/completed_task_card.dart';
 import 'misc/my_floating_action_button.dart';
 
 class CalendarView extends StatelessWidget {
-  const CalendarView(this._tasks, {Key? key}) : super(key: key);
+  CalendarView(this._tasks, {Key? key}) : super(key: key) {
+    _tasks.sort(((a, b) {
+      return a.dueDate.compareTo(b.dueDate);
+    }));
+  }
 
   static const routeName = '/calendar';
   final List<Task> _tasks;
@@ -43,7 +49,23 @@ class CalendarView extends StatelessWidget {
           ),
         ],
       ),
-      body: const Text("CalendarView"),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+            childCount: _tasks.length + 2,
+            (context, index) {
+              if (index == 0) return const Text("Calendar");
+              if (index == 1) return const Divider();
+              if (_tasks[index - 2].status == StatusTask.active) {
+                return ActiveTaskCard(_tasks[index - 2]);
+              } else {
+                return CompletedTaskCard(_tasks[index - 2]);
+              }
+            },
+          ))
+        ],
+      ),
     );
   }
 }

@@ -9,10 +9,10 @@
   "settingsViewDarkTheme": "Dark Theme",
   "myFloatingActionButtonTooltip": "Add task",
   "calendarViewTitle": "Calendar",
-  "calendarViewToTasksButton": "to Tasks view",
+  "calendarViewToTasksButton": "Tasks",
   "tasksListViewTitle": "Tasks",
   "tasksListViewActive": "active",
   "tasksListViewCompleted": "completed",
-  "tasksListViewToCalendarButton": "to Calendar view",
+  "tasksListViewToCalendarButton": "Calendar",
   "settingsButtonTooltip": "Settings"
 }
