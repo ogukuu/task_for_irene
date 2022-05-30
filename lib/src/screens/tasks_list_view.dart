@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:task_for_irene/src/screens/tasks_list_view.dart';
+import 'package:task_for_irene/src/screens/calendar_view.dart';
 
 import '../models/task.dart';
 import '../settings/settings_view.dart';
 
-class CalendarView extends StatelessWidget {
-  const CalendarView(this._tasks, {Key? key}) : super(key: key);
+class TasksListView extends StatelessWidget {
+  const TasksListView(this._tasks, {Key? key}) : super(key: key);
 
-  static const routeName = '/calendar';
+  static const routeName = '/tasks';
   final List<Task> _tasks;
 
   @override
@@ -16,12 +16,12 @@ class CalendarView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(AppLocalizations.of(context)!.calendarViewTitle),
+        title: Text(AppLocalizations.of(context)!.tasksListViewTitle),
         actions: [
           IconButton(
-            icon: const Icon(Icons.tab_outlined),
+            icon: const Icon(Icons.calendar_month_outlined),
             onPressed: () {
-              Navigator.restorablePushNamed(context, TasksListView.routeName);
+              Navigator.restorablePushNamed(context, CalendarView.routeName);
             },
           ),
           const VerticalDivider(
@@ -36,7 +36,7 @@ class CalendarView extends StatelessWidget {
           ),
         ],
       ),
-      body: const Text("CalendarView"),
+      body: const Text("TasksListView"),
     );
   }
 }

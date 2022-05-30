@@ -8,5 +8,8 @@
   "settingsViewLightTheme": "Light Theme",
   "settingsViewDarkTheme": "Dark Theme",
   "activeTasksListViewTitle": "Active tasks",
-  "completedTasksListViewTitle":"Completed tasks"
+  "completedTasksListViewTitle": "Completed tasks",
+  "myFloatingActionButtonTooltip": "Add task",
+  "calendarViewTitle": "Calendar",
+  "tasksListViewTitle": "Tacks"
 }

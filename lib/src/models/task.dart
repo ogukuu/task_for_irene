@@ -34,6 +34,14 @@ class StatusTask {
   static const fail = "fail";
 }
 
+var testTask = Task(
+    'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
+    'description2',
+    DateTime.now(),
+    ReminderFrequency(),
+    StatusTask.active,
+    null);
+
 List<Task> testTasks = [
   Task(
       'title1',

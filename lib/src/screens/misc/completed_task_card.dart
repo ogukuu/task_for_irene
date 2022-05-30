@@ -57,14 +57,3 @@ class CompletedTaskCard extends StatelessWidget {
         ]));
   }
 }
-
-
-
-
-/*
-ListTile(
-        title: Text('SampleItem ${item.id}'),
-        leading: const CircleAvatar(
-          foregroundImage: AssetImage('assets/images/flutter_logo.png'),
-        ),
-        onTap: () {});*/
