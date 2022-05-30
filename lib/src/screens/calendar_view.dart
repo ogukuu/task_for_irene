@@ -55,7 +55,7 @@ class CalendarView extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
             childCount: _tasks.length + 2,
             (context, index) {
-              if (index == 0) return const Text("Calendar");
+              if (index == 0) return const Text('calendar');
               if (index == 1) return const Divider();
               if (_tasks[index - 2].status == StatusTask.active) {
                 return ActiveTaskCard(_tasks[index - 2]);
