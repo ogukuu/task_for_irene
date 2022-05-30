@@ -7,9 +7,12 @@
   "settingsViewSystemTheme": "System Theme",
   "settingsViewLightTheme": "Light Theme",
   "settingsViewDarkTheme": "Dark Theme",
-  "activeTasksListViewTitle": "Active tasks",
-  "completedTasksListViewTitle": "Completed tasks",
   "myFloatingActionButtonTooltip": "Add task",
   "calendarViewTitle": "Calendar",
-  "tasksListViewTitle": "Tacks"
+  "calendarViewToTasksButton": "to Tasks view",
+  "tasksListViewTitle": "Tasks",
+  "tasksListViewActive": "active",
+  "tasksListViewCompleted": "completed",
+  "tasksListViewToCalendarButton": "to Calendar view",
+  "settingsButtonTooltip": "Settings"
 }

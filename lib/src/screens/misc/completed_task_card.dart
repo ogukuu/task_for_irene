@@ -7,7 +7,7 @@ class CompletedTaskCard extends StatelessWidget {
   final Task _task;
 
   Widget _proofPhoto(double maxSize) {
-    const double defSize = 150;
+    const double defSize = 100;
     final double currentSize = defSize > maxSize ? maxSize : defSize;
     return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -20,13 +20,14 @@ class CompletedTaskCard extends StatelessWidget {
   Widget _getStatusImage() {
     switch (_task.status) {
       case StatusTask.fail:
-        return Image.asset('assets/images/fail.jpg');
-      case StatusTask.surrender:
-        return Image.asset('assets/images/surrender.jpg');
+        return Image.asset('assets/images/fail.png');
+      case StatusTask.surrendered:
+        return Image.asset('assets/images/surrendered.png');
       case StatusTask.completed:
-        return _task.photoProof ?? Image.asset('assets/images/error.jpg');
+        return _task.photoProof ??
+            Image.asset('assets/images/error_not_found_proof.png');
       default:
-        return Image.asset('assets/images/error.jpg');
+        return Image.asset('assets/images/error.png');
     }
   }
 

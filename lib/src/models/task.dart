@@ -21,7 +21,7 @@ class Task {
   }
 
   void surrender() {
-    status = StatusTask.surrender;
+    status = StatusTask.surrendered;
   }
 }
 
@@ -30,7 +30,7 @@ class ReminderFrequency {}
 class StatusTask {
   static const active = "active";
   static const completed = "completed";
-  static const surrender = "surrender";
+  static const surrendered = "surrendered";
   static const fail = "fail";
 }
 
@@ -60,7 +60,7 @@ List<Task> testTasks = [
   Task('title3', 'description3', DateTime.now(), ReminderFrequency(),
       StatusTask.completed, null),
   Task('title4', 'description4', DateTime.now(), ReminderFrequency(),
-      StatusTask.surrender, null),
+      StatusTask.surrendered, null),
   Task('title5', 'description5', DateTime.now(), ReminderFrequency(),
       StatusTask.fail, null)
 ];
