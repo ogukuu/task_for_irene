@@ -7,14 +7,17 @@ class CompletedTaskCard extends StatelessWidget {
   final Task _task;
 
   Widget _proofPhoto(double maxSize) {
-    const double defSize = 100;
+    const double defSize = 128;
     final double currentSize = defSize > maxSize ? maxSize : defSize;
     return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-            width: currentSize,
-            height: currentSize,
-            child: FittedBox(fit: BoxFit.cover, child: _getStatusImage())));
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+          width: currentSize,
+          height: currentSize,
+          child: Card(
+              clipBehavior: Clip.hardEdge,
+              child: FittedBox(fit: BoxFit.cover, child: _getStatusImage()))),
+    );
   }
 
   Widget _getStatusImage() {

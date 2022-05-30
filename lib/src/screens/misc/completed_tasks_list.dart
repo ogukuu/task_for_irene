@@ -10,6 +10,7 @@ class CompletedTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      primary: false,
       restorationId: 'activeTasksListView',
       itemCount: _tasks.length,
       itemBuilder: (BuildContext context, int index) =>
