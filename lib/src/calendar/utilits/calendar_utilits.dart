@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CalendarUtilits {
   static const int minYear = 2022;
 
@@ -44,34 +47,98 @@ class CalendarUtilits {
     }
   }
 
-  static String getNameMonth(int month) {
+  static int nextMonth(int month) {
+    int next = month + 1;
+    return (next == DateTime.monthsPerYear + 1) ? 1 : next;
+  }
+
+  static int prevMonth(int month) {
+    int prev = month - 1;
+    return (prev == 0) ? DateTime.monthsPerYear : prev;
+  }
+
+  static int nextDay(int day, int month, int year) {
+    int next = day + 1;
+    return (next == getDayInMonth(month, year) + 1) ? 1 : next;
+  }
+
+  static int prevDay(int day, int month, int year) {
+    int prev = day - 1;
+    return (prev == 0) ? getDayInMonth(prevMonth(month), year) : prev;
+  }
+}
+
+class CalendarUtilitsByContext {
+  final BuildContext context;
+  CalendarUtilitsByContext.of(this.context);
+
+  String getNameMonth(int month) {
     switch (month) {
       case DateTime.january:
-        return "january";
+        return AppLocalizations.of(context)!.january;
       case DateTime.february:
-        return "february";
+        return AppLocalizations.of(context)!.february;
       case DateTime.march:
-        return "march";
+        return AppLocalizations.of(context)!.march;
       case DateTime.april:
-        return "april";
+        return AppLocalizations.of(context)!.april;
       case DateTime.may:
-        return "may";
+        return AppLocalizations.of(context)!.may;
       case DateTime.june:
-        return "june";
+        return AppLocalizations.of(context)!.june;
       case DateTime.july:
-        return "july";
+        return AppLocalizations.of(context)!.july;
       case DateTime.august:
-        return "august";
+        return AppLocalizations.of(context)!.august;
       case DateTime.september:
-        return "september";
+        return AppLocalizations.of(context)!.september;
       case DateTime.october:
-        return "october";
+        return AppLocalizations.of(context)!.october;
       case DateTime.november:
-        return "november";
+        return AppLocalizations.of(context)!.november;
       case DateTime.december:
-        return "december";
+        return AppLocalizations.of(context)!.december;
       default:
         return "";
     }
   }
+
+  String getShortNameMonth(int month) {
+    switch (month) {
+      case DateTime.january:
+        return AppLocalizations.of(context)!.januaryShort;
+      case DateTime.february:
+        return AppLocalizations.of(context)!.februaryShort;
+      case DateTime.march:
+        return AppLocalizations.of(context)!.marchShort;
+      case DateTime.april:
+        return AppLocalizations.of(context)!.aprilShort;
+      case DateTime.may:
+        return AppLocalizations.of(context)!.mayShort;
+      case DateTime.june:
+        return AppLocalizations.of(context)!.juneShort;
+      case DateTime.july:
+        return AppLocalizations.of(context)!.julyShort;
+      case DateTime.august:
+        return AppLocalizations.of(context)!.augustShort;
+      case DateTime.september:
+        return AppLocalizations.of(context)!.septemberShort;
+      case DateTime.october:
+        return AppLocalizations.of(context)!.octoberShort;
+      case DateTime.november:
+        return AppLocalizations.of(context)!.novemberShort;
+      case DateTime.december:
+        return AppLocalizations.of(context)!.decemberShort;
+      default:
+        return "";
+    }
+  }
+}
+
+MaterialStateProperty<Color?>? elevatedButtonBackgroundFix(
+    BuildContext context) {
+  return (Theme.of(context).brightness == Brightness.dark)
+      ? MaterialStateProperty.all(
+          Theme.of(context).buttonTheme.colorScheme?.background)
+      : ElevatedButtonTheme.of(context).style?.backgroundColor;
 }

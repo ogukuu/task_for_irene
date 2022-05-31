@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
+import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import 'models/task.dart';
@@ -12,14 +13,11 @@ import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp(
-      {Key? key,
-      required this.settingsController,
-      required this.calendarController})
-      : super(key: key);
+  MyApp({Key? key, required this.settingsController}) : super(key: key);
 
   final SettingsController settingsController;
-  final CalendarController calendarController;
+  final CalendarController calendarController =
+      CalendarController(CurrentPeriod.now(PeriodType.month));
 
   @override
   Widget build(BuildContext context) {

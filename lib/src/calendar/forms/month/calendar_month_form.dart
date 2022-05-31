@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/calendar/forms/month/day_of_the_month.dart';
-import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 
 class CalendarMonthForm extends StatelessWidget {
   const CalendarMonthForm({Key? key, required this.controller})
       : super(key: key);
   final CalendarController controller;
-
-  Widget _title() {
-    return Text(
-        CalendarUtilits.getNameMonth(controller.period.dates.first.month));
-  }
 
   Widget _body() {
     return Table(
@@ -36,8 +30,6 @@ class CalendarMonthForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [_title(), _body()],
-    );
+    return _body();
   }
 }

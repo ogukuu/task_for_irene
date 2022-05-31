@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
+import 'package:task_for_irene/src/calendar/forms/calendar_top_bar.dart';
 import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
 
 import 'forms/day/calendar_day_form.dart';
@@ -10,8 +11,7 @@ class Calendar extends StatelessWidget {
   const Calendar({Key? key, required this.controller}) : super(key: key);
   final CalendarController controller;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _getPeriodTypeWidget() {
     switch (controller.period.periodType) {
       case PeriodType.year:
         return CalendarYearForm(controller: controller);
@@ -21,5 +21,22 @@ class Calendar extends StatelessWidget {
       default:
         return CalendarMonthForm(controller: controller);
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        return Column(
+          children: [
+            CalendarTopBar(
+              controller: controller,
+            ),
+            _getPeriodTypeWidget()
+          ],
+        );
+      },
+    );
   }
 }

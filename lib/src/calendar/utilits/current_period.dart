@@ -134,6 +134,8 @@ class CurrentPeriod {
     return CurrentPeriod.forDate(
         _dates.first.subtract(const Duration(days: 1)), periodType);
   }
+
+  int get month => _dates.first.month;
 }
 
 enum PeriodType { year, month, day }
