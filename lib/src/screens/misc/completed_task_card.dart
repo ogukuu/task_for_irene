@@ -34,14 +34,15 @@ class CompletedTaskCard extends StatelessWidget {
     }
   }
 
-  Widget _taskInfo(BuildContext context) {
+  Widget _taskInfo() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(_task.title,
-            overflow: TextOverflow.ellipsis,
-            style:
-                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3)),
+        Text(
+          _task.title,
+          overflow: TextOverflow.ellipsis,
+          textScaleFactor: 1.3,
+        ),
         const Divider(height: 16, indent: 10, endIndent: 10),
         Text(_task.description)
       ]),
@@ -57,7 +58,7 @@ class CompletedTaskCard extends StatelessWidget {
             verticalDirection: VerticalDirection.down,
             children: [
           _proofPhoto(maxWidthProofPhoto),
-          Expanded(child: _taskInfo(context))
+          Expanded(child: _taskInfo())
         ]));
   }
 }

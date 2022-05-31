@@ -21,8 +21,7 @@ class CalendarMonthForm extends StatelessWidget {
       tableRowList.add(TableRow(
           children: days
               .getRange(i * 7, i * 7 + 7)
-              .map((e) => DayOfTheMonth(
-                  date: e, month: controller.period.dates.first.month))
+              .map((e) => DayOfTheMonth(date: e, controller: controller))
               .toList()));
     }
     return tableRowList;

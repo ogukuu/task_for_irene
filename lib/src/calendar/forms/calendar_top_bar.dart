@@ -41,19 +41,26 @@ class CalendarTopBar extends StatelessWidget {
         onPressed: (() {
           controller.updatePeriodType(controller.period.up());
         }),
-        child:
-            Text(_upTitle(context), style: Theme.of(context).textTheme.button));
+        child: Text(
+          _upTitle(context),
+          style: Theme.of(context).textTheme.button,
+          overflow: TextOverflow.ellipsis,
+          textScaleFactor: 1.3,
+        ));
   }
 
   String _upTitle(BuildContext context) {
+    String currentMonthText = CalendarUtilitsByContext.of(context)
+        .getNameMonth(controller.period.month);
+    int currentYear = controller.period.dates.first.year;
+    int currentDay = controller.period.dates.first.day;
     switch (controller.period.periodType) {
       case PeriodType.month:
-        return CalendarUtilitsByContext.of(context)
-            .getNameMonth(controller.period.month);
+        return "$currentMonthText, $currentYear";
       case PeriodType.year:
-        return (controller.period.dates.first.year).toString();
+        return currentYear.toString();
       case PeriodType.day:
-        return controller.period.dates.first.day.toString();
+        return "$currentDay $currentMonthText $currentYear";
     }
   }
 

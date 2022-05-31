@@ -17,11 +17,11 @@ class ActiveTaskCard extends StatelessWidget {
             child: Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(10),
-              child: Text(_task.title,
-                  overflow: TextOverflow.ellipsis,
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .apply(fontSizeFactor: 1.3)),
+              child: Text(
+                _task.title,
+                overflow: TextOverflow.ellipsis,
+                textScaleFactor: 1.3,
+              ),
             ),
           ),
           Expanded(
