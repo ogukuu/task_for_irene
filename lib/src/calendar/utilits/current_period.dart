@@ -3,6 +3,7 @@ import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 class CurrentPeriod {
   late final List<DateTime> _dates;
   List<DateTime> get dates => _dates;
+  final PeriodType periodType;
 
   List<DateTime> getExtendedMonthDates(int firstDayOfTheWeek) {
     if (periodType == PeriodType.day ||
@@ -28,8 +29,6 @@ class CurrentPeriod {
     }
     return tempDates;
   }
-
-  final PeriodType periodType;
 
   CurrentPeriod.now(this.periodType) {
     var now = DateTime.now();
@@ -84,6 +83,56 @@ class CurrentPeriod {
           break;
         }
     }
+  }
+
+  bool equals(CurrentPeriod other) {
+    return (periodType == other.periodType) &&
+        (_dates.first.isAtSameMomentAs(other.dates.first));
+  }
+
+  CurrentPeriod up() {
+    switch (periodType) {
+      case PeriodType.month:
+        return CurrentPeriod.forDate(_dates.first, PeriodType.year);
+      case PeriodType.day:
+        return CurrentPeriod.forDate(_dates.first, PeriodType.month);
+      case PeriodType.year:
+      default:
+        return this;
+    }
+  }
+
+  CurrentPeriod down(DateTime pick) {
+    switch (periodType) {
+      case PeriodType.month:
+        return CurrentPeriod.forDate(pick, PeriodType.day);
+      case PeriodType.year:
+        return CurrentPeriod.forDate(pick, PeriodType.month);
+      case PeriodType.day:
+      default:
+        return this;
+    }
+  }
+
+  CurrentPeriod next() {
+    DateTime newDate;
+    switch (periodType) {
+      case PeriodType.month:
+        newDate = _dates.first.add(const Duration(days: 32));
+        break;
+      case PeriodType.year:
+        newDate = _dates.first.add(const Duration(days: 366));
+        break;
+      case PeriodType.day:
+      default:
+        newDate = _dates.first.add(const Duration(days: 1));
+    }
+    return CurrentPeriod.forDate(newDate, periodType);
+  }
+
+  CurrentPeriod prev() {
+    return CurrentPeriod.forDate(
+        _dates.first.subtract(const Duration(days: 1)), periodType);
   }
 }
 

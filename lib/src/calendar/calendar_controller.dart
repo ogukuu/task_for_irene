@@ -10,7 +10,7 @@ class CalendarController extends ChangeNotifier {
   Future<void> updatePeriodType(CurrentPeriod? newPeriod) async {
     if (newPeriod == null) return;
 
-    if (newPeriod == _period) return;
+    if (newPeriod.equals(_period)) return;
 
     _period = newPeriod;
 
