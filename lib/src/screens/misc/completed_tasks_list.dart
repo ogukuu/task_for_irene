@@ -11,7 +11,7 @@ class CompletedTasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       primary: false,
-      restorationId: 'activeTasksListView',
+      restorationId: 'completedTasksListView',
       itemCount: _tasks.length,
       itemBuilder: (BuildContext context, int index) =>
           CompletedTaskCard(_tasks[index]),
