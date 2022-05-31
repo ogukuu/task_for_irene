@@ -38,5 +38,15 @@
   "septemberShort": "Sep",
   "octoberShort": "Oct",
   "novemberShort": "Nov",
-  "decemberShort": "Dec"
+  "decemberShort": "Dec",
+  "addTaskViewTitle": "Add task",
+  "addTaskViewTaskTitle": "Title",
+  "addTaskViewTaskDescription": "Description",
+  "addTaskViewTaskSelectDueDate": "Select due date",
+  "addTaskViewTaskSelectDueTime": "Select due time(optional)",
+  "reminderFrequencyDay": "Day",
+  "reminderFrequencyWeek": "Week",
+  "reminderFrequencyMonth": "Month",
+  "addTaskViewReminderFrequencyLabel": "How often to remind about the task?",
+  "addTaskViewSave": "Save"
 }

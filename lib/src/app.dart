@@ -3,11 +3,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
+import 'package:task_for_irene/src/screens/add_task_view.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import 'models/task.dart';
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
 import 'screens/calendar_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
@@ -56,13 +55,13 @@ class MyApp extends StatelessWidget {
 
   Widget getView(String? route) {
     switch (route) {
+      case AddTaskView.routeName:
+        return const AddTaskView();
       case SettingsView.routeName:
         return SettingsView(controller: settingsController);
-      case SampleItemDetailsView.routeName:
-        return const SampleItemDetailsView();
       case TasksView.routeName:
         return TasksView(testTasks);
-      case SampleItemListView.routeName:
+      case CalendarView.routeName:
       default:
         return CalendarView(testTasks,
             calendarController:

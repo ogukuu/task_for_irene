@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/screens/add_task_view.dart';
 import 'package:task_for_irene/src/screens/calendar_view.dart';
 import 'package:task_for_irene/src/screens/misc/active_tasks_list.dart';
 import 'package:task_for_irene/src/screens/misc/completed_tasks_list.dart';
@@ -22,7 +23,9 @@ class TasksView extends StatelessWidget {
       child: Scaffold(
           floatingActionButton: MyFloatingActionButton(
             context: context,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.restorablePushNamed(context, AddTaskView.routeName);
+            },
           ),
           appBar: AppBar(
             automaticallyImplyLeading: false,

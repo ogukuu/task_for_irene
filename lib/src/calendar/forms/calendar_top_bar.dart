@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
 
+import '../../utilits/fix.dart';
 import '../calendar_controller.dart';
 
 class CalendarTopBar extends StatelessWidget {

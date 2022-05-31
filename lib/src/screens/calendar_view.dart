@@ -6,6 +6,7 @@ import 'package:task_for_irene/src/screens/tasks_view.dart';
 
 import '../models/task.dart';
 import '../settings/settings_view.dart';
+import 'add_task_view.dart';
 import 'misc/active_task_card.dart';
 import 'misc/completed_task_card.dart';
 import 'misc/my_floating_action_button.dart';
@@ -27,7 +28,9 @@ class CalendarView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: MyFloatingActionButton(
         context: context,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.restorablePushNamed(context, AddTaskView.routeName);
+        },
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
