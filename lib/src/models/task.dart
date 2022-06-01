@@ -10,13 +10,13 @@ class Task {
   String reminderFrequency;
   String status;
 
-  Task(this.title, this.description, this.dueDate, this.reminderFrequency,
-      this.status, this.photoProof);
+  Task(this.id, this.title, this.description, this.dueDate,
+      this.reminderFrequency, this.status, this.photoProof);
 
   Task.newTask(String title, String description, DateTime dueDate,
       String reminderFrequency)
-      : this(title, description, dueDate, reminderFrequency, StatusTask.active,
-            null);
+      : this(0, title, description, dueDate, reminderFrequency,
+            StatusTask.active, null);
 
   void completed(dynamic proof) {
     photoProof = proof;
@@ -54,6 +54,7 @@ class StatusTask {
 }
 
 var testTask = Task(
+    0,
     'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
     'description2',
     DateTime.now(),
@@ -63,6 +64,7 @@ var testTask = Task(
 
 List<Task> testTasks = [
   Task(
+      0,
       'title1',
       'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
       DateTime.now(),
@@ -70,16 +72,17 @@ List<Task> testTasks = [
       StatusTask.active,
       null),
   Task(
+      0,
       'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
       'description2',
       DateTime.now(),
       ReminderFrequency.month,
       StatusTask.active,
       null),
-  Task('title3', 'description3', DateTime.now(), ReminderFrequency.day,
+  Task(0, 'title3', 'description3', DateTime.now(), ReminderFrequency.day,
       StatusTask.completed, null),
-  Task('title4', 'description4', DateTime.now(), ReminderFrequency.month,
+  Task(0, 'title4', 'description4', DateTime.now(), ReminderFrequency.month,
       StatusTask.surrendered, null),
-  Task('title5', 'description5', DateTime.now(), ReminderFrequency.week,
+  Task(0, 'title5', 'description5', DateTime.now(), ReminderFrequency.week,
       StatusTask.fail, null)
 ];
