@@ -198,6 +198,11 @@ class _AddTaskViewState extends State<AddTaskView> {
     if (dueDate == null) {
       if (error.isNotEmpty) error += "\n";
       error += AppLocalizations.of(context)!.addTaskViewErrorDueDate;
+    } else {
+      if (getDue(dueDate!, dueTime).isBefore(DateTime.now())) {
+        error += "\n";
+        error += AppLocalizations.of(context)!.addTaskViewErrorLate;
+      }
     }
     return error;
   }

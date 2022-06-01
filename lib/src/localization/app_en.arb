@@ -51,5 +51,6 @@
   "addTaskViewSave": "Save",
   "addTaskViewErrorTitle": "Title is empty",
   "addTaskViewErrorDescription": "Description is empty",
-  "addTaskViewErrorDueDate": "Due date not set"
+  "addTaskViewErrorDueDate": "Due date not set",
+  "addTaskViewErrorLate": "Due date has already arrived"
 }
