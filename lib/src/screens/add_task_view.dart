@@ -189,15 +189,15 @@ class _AddTaskViewState extends State<AddTaskView> {
   String _saveTest(BuildContext context) {
     String error = "";
     if (title == null) {
-      error += "Title empty";
+      error += AppLocalizations.of(context)!.addTaskViewErrorTitle;
     }
     if (description == null) {
       if (error.isNotEmpty) error += "\n";
-      error += "description empty";
+      error += AppLocalizations.of(context)!.addTaskViewErrorDescription;
     }
     if (dueDate == null) {
       if (error.isNotEmpty) error += "\n";
-      error += "dueDate empty";
+      error += AppLocalizations.of(context)!.addTaskViewErrorDueDate;
     }
     return error;
   }

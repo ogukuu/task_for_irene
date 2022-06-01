@@ -48,5 +48,8 @@
   "reminderFrequencyWeek": "Week",
   "reminderFrequencyMonth": "Month",
   "addTaskViewReminderFrequencyLabel": "How often to remind about the task?",
-  "addTaskViewSave": "Save"
+  "addTaskViewSave": "Save",
+  "addTaskViewErrorTitle": "Title is empty",
+  "addTaskViewErrorDescription": "Description is empty",
+  "addTaskViewErrorDueDate": "Due date not set"
 }

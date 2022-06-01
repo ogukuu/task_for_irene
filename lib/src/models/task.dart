@@ -7,7 +7,7 @@ class Task {
   String description;
   DateTime dueDate;
   dynamic photoProof;
-  String reminderFrequency; //?
+  String reminderFrequency;
   String status;
 
   Task(this.title, this.description, this.dueDate, this.reminderFrequency,
