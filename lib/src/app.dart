@@ -5,23 +5,21 @@ import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/calendar/utilits/current_period.dart';
 import 'package:task_for_irene/src/screens/add_task_view.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
-
-import 'models/task.dart';
 import 'screens/calendar_view.dart';
-import 'settings/settings_controller.dart';
+import 'app_controller.dart';
 import 'settings/settings_view.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.settingsController}) : super(key: key);
+  MyApp({Key? key, required this.appController}) : super(key: key);
 
-  final SettingsController settingsController;
+  final AppController appController;
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: settingsController,
+      animation: appController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
               AppLocalizations.of(context)!.appTitle,
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
+          themeMode: appController.themeMode,
           onGenerateRoute: (RouteSettings routeSettings) {
             return MaterialPageRoute<void>(
               settings: routeSettings,
@@ -56,16 +54,17 @@ class MyApp extends StatelessWidget {
   Widget getView(String? route) {
     switch (route) {
       case AddTaskView.routeName:
-        return const AddTaskView();
+        return AddTaskView(controller: appController);
       case SettingsView.routeName:
-        return SettingsView(controller: settingsController);
+        return SettingsView(controller: appController);
       case TasksView.routeName:
-        return TasksView(testTasks);
+        return TasksView(controller: appController);
       case CalendarView.routeName:
       default:
-        return CalendarView(testTasks,
-            calendarController:
-                calendarController); //const SampleItemListView();
+        return CalendarView(
+          calendarController: calendarController,
+          controller: appController,
+        ); //const SampleItemListView();
     }
   }
 }

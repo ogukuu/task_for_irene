@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/app_controller.dart';
 import 'package:task_for_irene/src/calendar/calendar.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/screens/tasks_view.dart';
@@ -12,15 +13,18 @@ import 'elements/completed_task_card.dart';
 import 'elements/my_floating_action_button.dart';
 
 class CalendarView extends StatelessWidget {
-  CalendarView(this._tasks, {Key? key, required this.calendarController})
+  CalendarView(
+      {Key? key, required this.calendarController, required this.controller})
       : super(key: key) {
-    _tasks.sort(((a, b) {
+    tasks.addAll(controller.tasks);
+    tasks.sort(((a, b) {
       return a.dueDate.compareTo(b.dueDate);
     }));
   }
 
   static const routeName = '/calendar';
-  final List<Task> _tasks;
+  final AppController controller;
+  final List<Task> tasks = [];
   final CalendarController calendarController;
 
   @override
@@ -60,14 +64,14 @@ class CalendarView extends StatelessWidget {
         slivers: [
           SliverList(
               delegate: SliverChildBuilderDelegate(
-            childCount: _tasks.length + 2,
+            childCount: tasks.length + 2,
             (context, index) {
               if (index == 0) return Calendar(controller: calendarController);
               if (index == 1) return const Divider();
-              if (_tasks[index - 2].status == StatusTask.active) {
-                return ActiveTaskCard(_tasks[index - 2]);
+              if (tasks[index - 2].status == StatusTask.active) {
+                return ActiveTaskCard(tasks[index - 2]);
               } else {
-                return CompletedTaskCard(_tasks[index - 2]);
+                return CompletedTaskCard(tasks[index - 2]);
               }
             },
           ))

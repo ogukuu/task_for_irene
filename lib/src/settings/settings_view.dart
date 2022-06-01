@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'settings_controller.dart';
+import '../app_controller.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({Key? key, required this.controller}) : super(key: key);
 
   static const routeName = '/settings';
 
-  final SettingsController controller;
+  final AppController controller;
 
   @override
   Widget build(BuildContext context) {

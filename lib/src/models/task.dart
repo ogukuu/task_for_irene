@@ -7,14 +7,14 @@ class Task {
   String description;
   DateTime dueDate;
   dynamic photoProof;
-  ReminderFrequency reminderFrequency; //?
+  String reminderFrequency; //?
   String status;
 
   Task(this.title, this.description, this.dueDate, this.reminderFrequency,
       this.status, this.photoProof);
 
   Task.newTask(String title, String description, DateTime dueDate,
-      ReminderFrequency reminderFrequency)
+      String reminderFrequency)
       : this(title, description, dueDate, reminderFrequency, StatusTask.active,
             null);
 
@@ -57,7 +57,7 @@ var testTask = Task(
     'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
     'description2',
     DateTime.now(),
-    ReminderFrequency(),
+    ReminderFrequency.day,
     StatusTask.active,
     null);
 
@@ -66,20 +66,20 @@ List<Task> testTasks = [
       'title1',
       'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
       DateTime.now(),
-      ReminderFrequency(),
+      ReminderFrequency.week,
       StatusTask.active,
       null),
   Task(
       'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
       'description2',
       DateTime.now(),
-      ReminderFrequency(),
+      ReminderFrequency.month,
       StatusTask.active,
       null),
-  Task('title3', 'description3', DateTime.now(), ReminderFrequency(),
+  Task('title3', 'description3', DateTime.now(), ReminderFrequency.day,
       StatusTask.completed, null),
-  Task('title4', 'description4', DateTime.now(), ReminderFrequency(),
+  Task('title4', 'description4', DateTime.now(), ReminderFrequency.month,
       StatusTask.surrendered, null),
-  Task('title5', 'description5', DateTime.now(), ReminderFrequency(),
+  Task('title5', 'description5', DateTime.now(), ReminderFrequency.week,
       StatusTask.fail, null)
 ];

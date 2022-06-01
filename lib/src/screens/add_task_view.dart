@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/models/task.dart';
+import 'package:task_for_irene/src/app_controller.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 import '../utilits/fix.dart';
 
 class AddTaskView extends StatefulWidget {
-  const AddTaskView({Key? key}) : super(key: key);
+  const AddTaskView({Key? key, required this.controller}) : super(key: key);
 
   static const routeName = '/add_task';
+  final AppController controller;
 
   @override
   State<AddTaskView> createState() => _AddTaskViewState();
@@ -160,6 +162,13 @@ class _AddTaskViewState extends State<AddTaskView> {
                           behavior: SnackBarBehavior.floating,
                           duration: const Duration(seconds: 2),
                         ));
+                      } else {
+                        widget.controller.addTask(Task.newTask(
+                            title!,
+                            description!,
+                            getDue(dueDate!, dueTime),
+                            reminderFrequency));
+                        Navigator.pop(context);
                       }
                     },
                     child: Padding(
@@ -191,5 +200,12 @@ class _AddTaskViewState extends State<AddTaskView> {
       error += "dueDate empty";
     }
     return error;
+  }
+
+  DateTime getDue(DateTime dueDate, TimeOfDay? dueTime) {
+    return (dueTime == null)
+        ? dueDate
+        : DateTime(dueDate.year, dueDate.month, dueDate.day, dueTime.hour,
+            dueTime.minute);
   }
 }
