@@ -9,7 +9,6 @@ import '../utilits/fix.dart';
 class AddTaskView extends StatefulWidget {
   const AddTaskView({Key? key, required this.controller}) : super(key: key);
 
-  static const routeName = '/add_task';
   final AppController controller;
 
   @override

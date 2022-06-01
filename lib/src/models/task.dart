@@ -31,6 +31,12 @@ class Task {
   String testDescription() {
     return "id: $id, status:$status, freq:$reminderFrequency, dueDate: ${dueDate.toString()}";
   }
+
+  @override
+  bool operator ==(Object other) => other is Task && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class ReminderFrequency {

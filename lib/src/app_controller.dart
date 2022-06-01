@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/navigation/nav_route.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 
+import 'calendar/calendar_controller.dart';
+import 'calendar/utilits/current_period.dart';
 import 'models/task.dart';
 import 'settings/settings_service.dart';
 
 class AppController with ChangeNotifier {
-  AppController({required this.settingsService, required this.repository});
+  AppController({required this.settingsService, required this.repository}) {
+    navRoute = NavRoute(controller: this);
+  }
 
   //setting controller
 
@@ -38,7 +43,6 @@ class AppController with ChangeNotifier {
   List<Task> get tasks => _tasks;
 
   void loadTasks() {
-    //_tasks.addAll(testTasks);
     _tasks.addAll(repository.getAll());
     notifyListeners();
   }
@@ -51,9 +55,25 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
+  Task? getTask(String id) {
+    List<Task> t = _tasks.where((element) => element.id == id).toList();
+    if (t.isEmpty) {
+      return null;
+    } else {
+      return t.first;
+    }
+  }
+
   void clear() {
     repository.clear();
     _tasks.clear();
     notifyListeners();
   }
+
+  // calendar controller
+  final CalendarController calendarController =
+      CalendarController(CurrentPeriod.now(PeriodType.month));
+
+  // navigation
+  late final NavRoute navRoute;
 }

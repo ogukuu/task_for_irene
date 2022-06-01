@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:task_for_irene/src/screens/add_task_view.dart';
-import 'package:task_for_irene/src/screens/calendar_view.dart';
+import 'package:task_for_irene/src/navigation/nav_route.dart';
 import 'package:task_for_irene/src/screens/elements/active_tasks_list.dart';
 import 'package:task_for_irene/src/screens/elements/completed_tasks_list.dart';
 import 'package:task_for_irene/src/screens/elements/my_floating_action_button.dart';
 import 'package:task_for_irene/src/app_controller.dart';
 
 import '../models/task.dart';
-import '../settings/settings_view.dart';
 
 class TasksView extends StatelessWidget {
   const TasksView({Key? key, required this.controller}) : super(key: key);
 
-  static const routeName = '/tasks';
   final AppController controller;
 
   @override
@@ -26,7 +23,7 @@ class TasksView extends StatelessWidget {
           floatingActionButton: MyFloatingActionButton(
             context: context,
             onPressed: () {
-              Navigator.restorablePushNamed(context, AddTaskView.routeName);
+              Navigator.restorablePushNamed(context, NavRoute.addTask);
             },
           ),
           appBar: AppBar(
@@ -38,8 +35,7 @@ class TasksView extends StatelessWidget {
                     AppLocalizations.of(context)!.tasksListViewToCalendarButton,
                 icon: const Icon(Icons.calendar_month_outlined),
                 onPressed: () {
-                  Navigator.restorablePushNamed(
-                      context, CalendarView.routeName);
+                  Navigator.restorablePushNamed(context, NavRoute.calendar);
                 },
               ),
               const VerticalDivider(
@@ -50,8 +46,7 @@ class TasksView extends StatelessWidget {
                 tooltip: AppLocalizations.of(context)!.settingsButtonTooltip,
                 icon: const Icon(Icons.settings),
                 onPressed: () {
-                  Navigator.restorablePushNamed(
-                      context, SettingsView.routeName);
+                  Navigator.restorablePushNamed(context, NavRoute.settings);
                 },
               )
             ],

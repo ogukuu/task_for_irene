@@ -3,29 +3,25 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/app_controller.dart';
 import 'package:task_for_irene/src/calendar/calendar.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
-import 'package:task_for_irene/src/screens/tasks_view.dart';
+import 'package:task_for_irene/src/navigation/nav_route.dart';
 
 import '../models/task.dart';
-import '../settings/settings_view.dart';
-import 'add_task_view.dart';
 import 'elements/active_task_card.dart';
 import 'elements/completed_task_card.dart';
 import 'elements/my_floating_action_button.dart';
 
 class CalendarView extends StatelessWidget {
-  CalendarView(
-      {Key? key, required this.calendarController, required this.controller})
-      : super(key: key) {
+  CalendarView({Key? key, required this.controller}) : super(key: key) {
+    calendarController = controller.calendarController;
     tasks.addAll(controller.tasks);
     tasks.sort(((a, b) {
       return a.dueDate.compareTo(b.dueDate);
     }));
   }
 
-  static const routeName = '/calendar';
   final AppController controller;
   final List<Task> tasks = [];
-  final CalendarController calendarController;
+  late final CalendarController calendarController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +29,7 @@ class CalendarView extends StatelessWidget {
       floatingActionButton: MyFloatingActionButton(
         context: context,
         onPressed: () {
-          Navigator.restorablePushNamed(context, AddTaskView.routeName);
+          Navigator.restorablePushNamed(context, NavRoute.addTask);
         },
       ),
       appBar: AppBar(
@@ -44,7 +40,7 @@ class CalendarView extends StatelessWidget {
             tooltip: AppLocalizations.of(context)!.calendarViewToTasksButton,
             icon: const Icon(Icons.tab_outlined),
             onPressed: () {
-              Navigator.restorablePushNamed(context, TasksView.routeName);
+              Navigator.restorablePushNamed(context, NavRoute.tasks);
             },
           ),
           const VerticalDivider(
@@ -55,7 +51,7 @@ class CalendarView extends StatelessWidget {
             tooltip: AppLocalizations.of(context)!.settingsButtonTooltip,
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.restorablePushNamed(context, SettingsView.routeName);
+              Navigator.restorablePushNamed(context, NavRoute.settings);
             },
           ),
         ],
