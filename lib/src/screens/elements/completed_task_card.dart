@@ -74,7 +74,7 @@ class _TaskInfo extends StatelessWidget {
           textScaleFactor: 1.3,
         ),
         const Divider(height: 16, indent: 10, endIndent: 10),
-        Text(task.description)
+        Text("${task.description} ${task.testDescription()}")
       ]),
     );
   }

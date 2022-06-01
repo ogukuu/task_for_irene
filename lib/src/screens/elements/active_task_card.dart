@@ -31,7 +31,7 @@ class _ActiveTaskDescription extends StatelessWidget {
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.all(10),
         child: Text(
-          task.description,
+          "${task.description} ${task.testDescription()}",
         ));
   }
 }

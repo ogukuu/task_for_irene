@@ -39,12 +39,18 @@ class HiveTaskRepository extends TaskRepository {
     box.close();
     super.close();
   }
+
+  @override
+  void clear() {
+    box.clear();
+    super.clear();
+  }
 }
 
 class TaskAdapter extends TypeAdapter<Task> {
   @override
   Task read(BinaryReader reader) {
-    var id = reader.readInt();
+    var id = reader.readString();
     var title = reader.readString();
     var description = reader.readString();
     DateTime dueDate = reader.read();
@@ -60,7 +66,7 @@ class TaskAdapter extends TypeAdapter<Task> {
 
   @override
   void write(BinaryWriter writer, Task obj) {
-    writer.writeInt(obj.id);
+    writer.writeString(obj.id);
     writer.writeString(obj.title);
     writer.writeString(obj.description);
     writer.write(obj.dueDate);

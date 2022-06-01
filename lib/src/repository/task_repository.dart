@@ -7,4 +7,5 @@ abstract class TaskRepository {
   void update(Task task);
   void init() {}
   void close() {}
+  void clear() {}
 }

@@ -50,4 +50,10 @@ class AppController with ChangeNotifier {
     repository.add(task);
     notifyListeners();
   }
+
+  void clear() {
+    repository.clear();
+    _tasks.clear();
+    notifyListeners();
+  }
 }

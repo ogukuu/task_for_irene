@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/utilits/uuid.dart';
 
 class Task {
-  int id = 0; //??
+  String id; //??
   String title;
   String description;
   DateTime dueDate;
@@ -15,7 +16,7 @@ class Task {
 
   Task.newTask(String title, String description, DateTime dueDate,
       String reminderFrequency)
-      : this(0, title, description, dueDate, reminderFrequency,
+      : this(UUID.getNew, title, description, dueDate, reminderFrequency,
             StatusTask.active, null);
 
   void completed(dynamic proof) {
@@ -25,6 +26,10 @@ class Task {
 
   void surrender() {
     status = StatusTask.surrendered;
+  }
+
+  String testDescription() {
+    return "id: $id, status:$status, freq:$reminderFrequency, dueDate: ${dueDate.toString()}";
   }
 }
 
@@ -54,7 +59,7 @@ class StatusTask {
 }
 
 var testTask = Task(
-    0,
+    UUID.getNew,
     'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
     'description2',
     DateTime.now(),
@@ -64,7 +69,7 @@ var testTask = Task(
 
 List<Task> testTasks = [
   Task(
-      0,
+      UUID.getNew,
       'title1',
       'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
       DateTime.now(),
@@ -72,17 +77,17 @@ List<Task> testTasks = [
       StatusTask.active,
       null),
   Task(
-      0,
+      UUID.getNew,
       'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
       'description2',
       DateTime.now(),
       ReminderFrequency.month,
       StatusTask.active,
       null),
-  Task(0, 'title3', 'description3', DateTime.now(), ReminderFrequency.day,
-      StatusTask.completed, null),
-  Task(0, 'title4', 'description4', DateTime.now(), ReminderFrequency.month,
-      StatusTask.surrendered, null),
-  Task(0, 'title5', 'description5', DateTime.now(), ReminderFrequency.week,
-      StatusTask.fail, null)
+  Task(UUID.getNew, 'title3', 'description3', DateTime.now(),
+      ReminderFrequency.day, StatusTask.completed, null),
+  Task(UUID.getNew, 'title4', 'description4', DateTime.now(),
+      ReminderFrequency.month, StatusTask.surrendered, null),
+  Task(UUID.getNew, 'title5', 'description5', DateTime.now(),
+      ReminderFrequency.week, StatusTask.fail, null)
 ];
