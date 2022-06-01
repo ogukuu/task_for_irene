@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/screens/add_task_view.dart';
 import 'package:task_for_irene/src/screens/calendar_view.dart';
-import 'package:task_for_irene/src/screens/misc/active_tasks_list.dart';
-import 'package:task_for_irene/src/screens/misc/completed_tasks_list.dart';
-import 'package:task_for_irene/src/screens/misc/my_floating_action_button.dart';
+import 'package:task_for_irene/src/screens/elements/active_tasks_list.dart';
+import 'package:task_for_irene/src/screens/elements/completed_tasks_list.dart';
+import 'package:task_for_irene/src/screens/elements/my_floating_action_button.dart';
 
 import '../models/task.dart';
 import '../settings/settings_view.dart';
