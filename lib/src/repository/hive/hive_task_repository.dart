@@ -7,12 +7,12 @@ class HiveTaskRepository extends TaskRepository {
   late Box<Task> box;
 
   @override
-  void add(Task task) async {
+  Future<void> add(Task task) async {
     await box.put(task.id, task);
   }
 
   @override
-  void delete(Task task) async {
+  Future<void> delete(Task task) async {
     await box.delete(task.id);
   }
 
@@ -22,7 +22,7 @@ class HiveTaskRepository extends TaskRepository {
   }
 
   @override
-  void update(Task task) async {
+  Future<void> update(Task task) async {
     await box.put(task.id, task);
   }
 
@@ -32,17 +32,24 @@ class HiveTaskRepository extends TaskRepository {
     Hive.registerAdapter(TaskAdapter());
     box = await Hive.openBox<Task>(nameBox);
     super.init();
+
+    //Test
+    await box.clear();
+    for (var e in testTasks) {
+      await add(e);
+    }
   }
 
   @override
-  void close() {
-    box.close();
+  Future<void> close() async {
+    await box.compact();
+    await box.close();
     super.close();
   }
 
   @override
-  void clear() {
-    box.clear();
+  Future<void> clear() async {
+    await box.clear();
     super.clear();
   }
 }

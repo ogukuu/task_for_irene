@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/navigation/nav_route.dart';
 
 import '../../models/task.dart';
+import '../../utilits/task_utilits.dart';
 
 class CompletedTaskCard extends StatelessWidget {
   const CompletedTaskCard(this.task, {Key? key}) : super(key: key);
@@ -9,14 +11,18 @@ class CompletedTaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double maxWidthProofPhoto = MediaQuery.of(context).size.width / 3;
-    return Card(
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            verticalDirection: VerticalDirection.down,
-            children: [
-          _ProofPhoto(maxSize: maxWidthProofPhoto, task: task),
-          Expanded(child: _TaskInfo(task: task))
-        ]));
+    return GestureDetector(
+      onTap: (() => Navigator.restorablePushNamed(
+          context, NavRoute.comletedTask + task.id)),
+      child: Card(
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              verticalDirection: VerticalDirection.down,
+              children: [
+            _ProofPhoto(maxSize: maxWidthProofPhoto, task: task),
+            Expanded(child: _TaskInfo(task: task))
+          ])),
+    );
   }
 }
 
@@ -29,20 +35,6 @@ class _ProofPhoto extends StatelessWidget {
 
   final double defSize = 128;
 
-  Widget _getStatusImage() {
-    switch (task.status) {
-      case StatusTask.fail:
-        return Image.asset('assets/images/fail.png');
-      case StatusTask.surrendered:
-        return Image.asset('assets/images/surrendered.png');
-      case StatusTask.completed:
-        return task.photoProof ??
-            Image.asset('assets/images/error_not_found_proof.png');
-      default:
-        return Image.asset('assets/images/error.png');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double currentSize = defSize > maxSize ? maxSize : defSize;
@@ -53,7 +45,8 @@ class _ProofPhoto extends StatelessWidget {
           height: currentSize,
           child: Card(
               clipBehavior: Clip.hardEdge,
-              child: FittedBox(fit: BoxFit.cover, child: _getStatusImage()))),
+              child:
+                  FittedBox(fit: BoxFit.cover, child: getStatusImage(task)))),
     );
   }
 }
