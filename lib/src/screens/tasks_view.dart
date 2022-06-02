@@ -6,8 +6,6 @@ import 'package:task_for_irene/src/screens/elements/completed_tasks_list.dart';
 import 'package:task_for_irene/src/screens/elements/my_floating_action_button.dart';
 import 'package:task_for_irene/src/app_controller.dart';
 
-import '../models/task.dart';
-
 class TasksView extends StatelessWidget {
   const TasksView({Key? key, required this.controller}) : super(key: key);
 
@@ -15,7 +13,6 @@ class TasksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = controller.tasks;
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
@@ -63,8 +60,8 @@ class TasksView extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              ActiveTasksList(tasks),
-              CompletedTasksList(tasks)
+              ActiveTasksList(controller.activeTasks),
+              CompletedTasksList(controller.completedTasks)
             ],
           )),
     );

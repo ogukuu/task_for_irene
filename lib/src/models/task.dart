@@ -11,6 +11,9 @@ class Task {
   String reminderFrequency;
   String status;
 
+  bool get isActive => status == StatusTask.active;
+  bool get isCompleted => !isActive;
+
   Task(this.id, this.title, this.description, this.dueDate,
       this.reminderFrequency, this.status, this.photoProof);
 
@@ -19,9 +22,9 @@ class Task {
       : this(UUID.getNew, title, description, dueDate, reminderFrequency,
             StatusTask.active, null);
 
-  void completed(dynamic proof) {
+  void success(dynamic proof) {
     photoProof = proof;
-    status = StatusTask.completed;
+    status = StatusTask.success;
   }
 
   void surrender() {
@@ -67,7 +70,8 @@ class ReminderFrequency {
 
 class StatusTask {
   static const active = "active";
-  static const completed = "completed";
+  // static const completed = "completed";
   static const surrendered = "surrendered";
   static const fail = "fail";
+  static const success = "success";
 }

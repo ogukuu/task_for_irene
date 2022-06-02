@@ -9,7 +9,7 @@ Widget getStatusImage(Task task) {
       return Image.asset('assets/images/fail.png');
     case StatusTask.surrendered:
       return Image.asset('assets/images/surrendered.png');
-    case StatusTask.completed:
+    case StatusTask.success:
       return task.photoProof ??
           Image.asset('assets/images/error_not_found_proof.png');
     default:
@@ -44,7 +44,7 @@ List<Task> testTasks = [
       StatusTask.active,
       null),
   Task(UUID.getNew, 'title3', 'description3', DateTime(2025),
-      ReminderFrequency.day, StatusTask.completed, null),
+      ReminderFrequency.day, StatusTask.success, null),
   Task(UUID.getNew, 'title4', 'description4', DateTime(2020),
       ReminderFrequency.month, StatusTask.surrendered, null),
   Task(UUID.getNew, 'title5', 'description5', DateTime(2023),
