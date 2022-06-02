@@ -52,5 +52,13 @@
   "addTaskViewErrorTitle": "Title is empty",
   "addTaskViewErrorDescription": "Description is empty",
   "addTaskViewErrorDueDate": "Due date not set",
-  "addTaskViewErrorLate": "Due date has already arrived"
+  "addTaskViewErrorLate": "Due date has already arrived",
+  "activeTaskViewTitle": "Edit task",
+  "activeTaskViewTaskDescription": "Description",
+  "activeTaskViewTaskDueDate": "Due date",
+  "activeTaskViewTaskDueDateDate": "Date",
+  "activeTaskViewTaskDueDateTime": "Time",
+  "activeTaskViewReminderFrequencyLabel": "Reminder frequency:",
+  "activeTaskViewSave": "Save",
+  "activeTaskViewErrorLate": "Due date has already arrived"
 }

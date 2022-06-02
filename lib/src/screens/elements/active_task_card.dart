@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/task.dart';
+import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
 
 class ActiveTaskCard extends StatelessWidget {
@@ -8,12 +9,16 @@ class ActiveTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Column(children: [
-      _ActiveTaskTitle(task: task),
-      const Divider(height: 0, indent: 10, endIndent: 10),
-      _ActiveTaskDescription(task: task)
-    ]));
+    return GestureDetector(
+      onTap: (() => Navigator.restorablePushNamed(
+          context, NavRoute.activeTask + task.id)),
+      child: Card(
+          child: Column(children: [
+        _ActiveTaskTitle(task: task),
+        const Divider(height: 0, indent: 10, endIndent: 10),
+        _ActiveTaskDescription(task: task)
+      ])),
+    );
   }
 }
 

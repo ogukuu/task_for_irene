@@ -21,17 +21,14 @@ class CompletedTaskView extends StatelessWidget {
   }
 
   Widget _bogy() {
-    if (task == null) {
-      return const Text("empty");
-    } else {
-      return Column(children: [
-        _Title(task: task!),
-        const Divider(),
-        _ProofPhoto(task: task!),
-        const Divider(),
-        _Description(task: task!)
-      ]);
-    }
+    if (task == null) return const Text("empty");
+    return Column(children: [
+      _Title(task: task!),
+      const Divider(),
+      _ProofPhoto(task: task!),
+      const Divider(),
+      _Description(task: task!)
+    ]);
   }
 }
 

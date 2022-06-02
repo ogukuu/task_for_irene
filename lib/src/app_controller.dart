@@ -40,10 +40,13 @@ class AppController with ChangeNotifier {
   final TaskRepository repository;
 
   final List<Task> _tasks = [];
-  List<Task> get tasks => _tasks;
+  List<Task> get tasks => List.of(_tasks, growable: false);
 
   void loadTasks() {
     _tasks.addAll(repository.getAll());
+    for (var element in _tasks) {
+      element.testDueDate();
+    }
     notifyListeners();
   }
 

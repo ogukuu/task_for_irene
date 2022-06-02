@@ -28,6 +28,10 @@ class Task {
     status = StatusTask.surrendered;
   }
 
+  void fail() {
+    status = StatusTask.fail;
+  }
+
   String testDescription() {
     return "id: $id, status:$status, freq:$reminderFrequency, dueDate: ${dueDate.toString()}";
   }
@@ -37,6 +41,10 @@ class Task {
 
   @override
   int get hashCode => id.hashCode;
+
+  void testDueDate() {
+    if (status == StatusTask.active && dueDate.isBefore(DateTime.now())) fail();
+  }
 }
 
 class ReminderFrequency {
@@ -63,37 +71,3 @@ class StatusTask {
   static const surrendered = "surrendered";
   static const fail = "fail";
 }
-
-var testTask = Task(
-    UUID.getNew,
-    'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
-    'description2',
-    DateTime.now(),
-    ReminderFrequency.day,
-    StatusTask.active,
-    null);
-
-List<Task> testTasks = [
-  Task(
-      UUID.getNew,
-      'title1',
-      'description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1',
-      DateTime.now(),
-      ReminderFrequency.week,
-      StatusTask.active,
-      null),
-  Task(
-      UUID.getNew,
-      'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
-      'description2',
-      DateTime.now(),
-      ReminderFrequency.month,
-      StatusTask.active,
-      null),
-  Task(UUID.getNew, 'title3', 'description3', DateTime.now(),
-      ReminderFrequency.day, StatusTask.completed, null),
-  Task(UUID.getNew, 'title4', 'description4', DateTime.now(),
-      ReminderFrequency.month, StatusTask.surrendered, null),
-  Task(UUID.getNew, 'title5', 'description5', DateTime.now(),
-      ReminderFrequency.week, StatusTask.fail, null)
-];

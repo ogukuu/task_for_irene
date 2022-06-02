@@ -2,6 +2,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 
+import '../../utilits/task_utilits.dart';
+
 class HiveTaskRepository extends TaskRepository {
   String nameBox = "HiveTaskRepository";
   late Box<Task> box;
