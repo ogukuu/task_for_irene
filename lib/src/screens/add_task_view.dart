@@ -60,6 +60,7 @@ class _AddTaskViewState extends State<AddTaskView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        elevation: 2,
         title: Text(AppLocalizations.of(context)!.addTaskViewTitle),
       ),
       body: Padding(
@@ -69,6 +70,7 @@ class _AddTaskViewState extends State<AddTaskView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //title
             TextFormField(
               onChanged: ((value) {
                 title = value;
@@ -77,6 +79,8 @@ class _AddTaskViewState extends State<AddTaskView> {
                   label:
                       Text(AppLocalizations.of(context)!.addTaskViewTaskTitle)),
             ),
+
+            // description
             TextFormField(
               onChanged: ((value) {
                 description = value;
@@ -87,10 +91,13 @@ class _AddTaskViewState extends State<AddTaskView> {
                       .addTaskViewTaskDescription)),
             ),
             const Divider(),
+
+            // due date
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                   style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(1),
                       backgroundColor: elevatedButtonBackgroundFix(context)),
                   onPressed: () {
                     selectDate(context);
@@ -106,6 +113,7 @@ class _AddTaskViewState extends State<AddTaskView> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                   style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(1),
                       backgroundColor: elevatedButtonBackgroundFix(context)),
                   onPressed: () {
                     selectTime(context);
@@ -118,6 +126,8 @@ class _AddTaskViewState extends State<AddTaskView> {
                   )),
             ),
             const Divider(),
+
+            // reminder frequency
             Text(
               AppLocalizations.of(context)!.addTaskViewReminderFrequencyLabel,
               textScaleFactor: 1.1,
@@ -145,11 +155,14 @@ class _AddTaskViewState extends State<AddTaskView> {
                           AppLocalizations.of(context)!.reminderFrequencyMonth))
                 ]),
             const Divider(),
+
+            // save button
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Center(
                 child: ElevatedButton(
                     style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(1),
                         backgroundColor: elevatedButtonBackgroundFix(context)),
                     onPressed: () {
                       String error = _saveTest(context);

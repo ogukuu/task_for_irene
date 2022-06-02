@@ -11,8 +11,9 @@ class CalendarTopBar extends StatelessWidget {
 
   Widget _prev(BuildContext context) {
     return ElevatedButton(
-        style:
-            ButtonStyle(backgroundColor: elevatedButtonBackgroundFix(context)),
+        style: ButtonStyle(
+            backgroundColor: elevatedButtonBackgroundFix(context),
+            elevation: MaterialStateProperty.all(1)),
         onPressed: () {
           controller.updatePeriodType(controller.period.prev());
         },
@@ -67,8 +68,9 @@ class CalendarTopBar extends StatelessWidget {
 
   Widget _next(BuildContext context) {
     return ElevatedButton(
-        style:
-            ButtonStyle(backgroundColor: elevatedButtonBackgroundFix(context)),
+        style: ButtonStyle(
+            backgroundColor: elevatedButtonBackgroundFix(context),
+            elevation: MaterialStateProperty.all(1)),
         onPressed: (() {
           controller.updatePeriodType(controller.period.next());
         }),

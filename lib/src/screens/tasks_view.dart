@@ -24,6 +24,7 @@ class TasksView extends StatelessWidget {
             },
           ),
           appBar: AppBar(
+            elevation: 2,
             automaticallyImplyLeading: false,
             title: Text(AppLocalizations.of(context)!.tasksListViewTitle),
             actions: [

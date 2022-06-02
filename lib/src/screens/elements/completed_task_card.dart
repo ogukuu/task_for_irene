@@ -15,13 +15,14 @@ class CompletedTaskCard extends StatelessWidget {
       onTap: (() => Navigator.restorablePushNamed(
           context, NavRoute.comletedTask + task.id)),
       child: Card(
+          elevation: 1,
           child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               verticalDirection: VerticalDirection.down,
               children: [
-            _ProofPhoto(maxSize: maxWidthProofPhoto, task: task),
-            Expanded(child: _TaskInfo(task: task))
-          ])),
+                _ProofPhoto(maxSize: maxWidthProofPhoto, task: task),
+                Expanded(child: _TaskInfo(task: task))
+              ])),
     );
   }
 }

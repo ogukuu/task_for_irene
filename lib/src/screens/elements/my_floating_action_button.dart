@@ -5,6 +5,7 @@ class MyFloatingActionButton extends FloatingActionButton {
   MyFloatingActionButton(
       {Key? key, VoidCallback? onPressed, required BuildContext context})
       : super(
+            elevation: 2,
             key: key,
             onPressed: onPressed,
             child: const Icon(Icons.add_task),

@@ -13,11 +13,12 @@ class ActiveTaskCard extends StatelessWidget {
       onTap: (() => Navigator.restorablePushNamed(
           context, NavRoute.activeTask + task.id)),
       child: Card(
+          elevation: 1,
           child: Column(children: [
-        _ActiveTaskTitle(task: task),
-        const Divider(height: 0, indent: 10, endIndent: 10),
-        _ActiveTaskDescription(task: task)
-      ])),
+            _ActiveTaskTitle(task: task),
+            const Divider(height: 0, indent: 10, endIndent: 10),
+            _ActiveTaskDescription(task: task)
+          ])),
     );
   }
 }

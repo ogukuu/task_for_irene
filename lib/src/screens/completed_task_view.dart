@@ -15,7 +15,9 @@ class CompletedTaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 2,
+      ),
       body: _bogy(),
     );
   }

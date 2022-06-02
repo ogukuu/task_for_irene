@@ -48,5 +48,9 @@ List<Task> testTasks = [
   Task(UUID.getNew, 'title4', 'description4', DateTime(2020),
       ReminderFrequency.month, StatusTask.surrendered, null),
   Task(UUID.getNew, 'title5', 'description5', DateTime(2023),
-      ReminderFrequency.week, StatusTask.fail, null)
+      ReminderFrequency.week, StatusTask.fail, null),
+  Task(UUID.getNew, 'title6', 'description6', DateTime(2023),
+      ReminderFrequency.week, StatusTask.active, null),
+  Task(UUID.getNew, 'title7', 'description7', DateTime(2050),
+      ReminderFrequency.week, StatusTask.active, null),
 ];

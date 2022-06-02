@@ -70,6 +70,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        elevation: 2,
         title: Text(AppLocalizations.of(context)!.activeTaskViewTitle),
       ),
       body: Padding(
@@ -110,6 +111,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(1),
                           backgroundColor:
                               elevatedButtonBackgroundFix(context)),
                       onPressed: () {
@@ -132,6 +134,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(1),
                           backgroundColor:
                               elevatedButtonBackgroundFix(context)),
                       onPressed: () {
@@ -180,6 +183,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
               child: Center(
                 child: ElevatedButton(
                     style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(1),
                         backgroundColor: elevatedButtonBackgroundFix(context)),
                     onPressed: () {
                       String error = _saveTest(context);

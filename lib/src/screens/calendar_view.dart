@@ -33,6 +33,7 @@ class CalendarView extends StatelessWidget {
         },
       ),
       appBar: AppBar(
+        elevation: 2,
         automaticallyImplyLeading: false,
         title: Text(AppLocalizations.of(context)!.calendarViewTitle),
         actions: [

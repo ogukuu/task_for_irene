@@ -42,9 +42,12 @@ class AppController with ChangeNotifier {
   final List<Task> _tasks = [];
   List<Task> get tasks => List.of(_tasks, growable: false);
   List<Task> get activeTasks =>
-      List.of(_tasks.where((element) => element.isActive), growable: false);
+      List.of(_tasks.where((element) => element.isActive), growable: false)
+        ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
+
   List<Task> get completedTasks =>
-      List.of(_tasks.where((element) => element.isCompleted), growable: false);
+      List.of(_tasks.where((element) => element.isCompleted), growable: false)
+        ..sort((a, b) => b.dueDate.compareTo(a.dueDate));
 
   void loadTasks() {
     _tasks.addAll(repository.getAll());

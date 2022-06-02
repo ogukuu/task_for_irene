@@ -11,6 +11,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 2,
         title: Text(AppLocalizations.of(context)!.settingsViewTitle),
       ),
       body: Column(children: [
