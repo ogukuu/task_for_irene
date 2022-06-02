@@ -66,7 +66,8 @@ class CalendarView extends StatelessWidget {
               if (index == 0) return Calendar(controller: calendarController);
               if (index == 1) return const Divider();
               if (tasks[index - 2].status == StatusTask.active) {
-                return ActiveTaskCard(tasks[index - 2]);
+                return ActiveTaskCard(
+                    controller: controller, task: tasks[index - 2]);
               } else {
                 return CompletedTaskCard(tasks[index - 2]);
               }

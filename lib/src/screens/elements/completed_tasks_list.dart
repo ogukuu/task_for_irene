@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/app_controller.dart';
 import 'package:task_for_irene/src/screens/elements/completed_task_card.dart';
 import '../../models/task.dart';
 
 class CompletedTasksList extends StatelessWidget {
-  const CompletedTasksList(this.tasks, {Key? key}) : super(key: key);
+  const CompletedTasksList({Key? key, required this.controller})
+      : super(key: key);
 
-  final List<Task> tasks;
+  final AppController controller;
 
   @override
   Widget build(BuildContext context) {
+    List<Task> tasks = controller.completedTasks;
     return ListView.builder(
       primary: false,
       restorationId: 'completedTasksListView',

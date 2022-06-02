@@ -80,6 +80,18 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteTask(Task task) {
+    _tasks.remove(task);
+    repository.delete(task);
+    notifyListeners();
+  }
+
+  void surrenderTask(Task task) {
+    task.surrender();
+    repository.update(task);
+    notifyListeners();
+  }
+
   // calendar controller
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));

@@ -61,8 +61,8 @@ class TasksView extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              ActiveTasksList(controller.activeTasks),
-              CompletedTasksList(controller.completedTasks)
+              ActiveTasksList(controller: controller),
+              CompletedTasksList(controller: controller)
             ],
           )),
     );
