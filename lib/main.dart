@@ -9,5 +9,25 @@ void main() async {
   await GlobalVar.appController.settingsService.init();
   await GlobalVar.appController.loadSettings();
   GlobalVar.appController.loadTasks();
-  runApp(MyApp(appController: GlobalVar.appController));
+  runApp(const _InitApp());
+}
+
+class _InitApp extends StatefulWidget {
+  const _InitApp({Key? key}) : super(key: key);
+
+  @override
+  State<_InitApp> createState() => _InitAppState();
+}
+
+class _InitAppState extends State<_InitApp> {
+  @override
+  void dispose() {
+    GlobalVar.appController.repository.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MyApp(appController: GlobalVar.appController);
+  }
 }
