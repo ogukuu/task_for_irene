@@ -65,13 +65,8 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
-  Task? getTask(String id) {
-    List<Task> t = _tasks.where((element) => element.id == id).toList();
-    if (t.isEmpty) {
-      return null;
-    } else {
-      return t.first;
-    }
+  List<Task> getTasksAtId(String id) {
+    return _tasks.where((element) => element.id == id).toList();
   }
 
   void clear() {
@@ -104,6 +99,13 @@ class AppController with ChangeNotifier {
     if (idTasks.isEmpty) return;
     Task surrendedTask = idTasks.first;
     surrenderTask(surrendedTask);
+  }
+
+  void update(Task task) {
+    _tasks.removeWhere((element) => element.id == task.id);
+    _tasks.add(task);
+    repository.update(task);
+    notifyListeners();
   }
 
   // calendar controller

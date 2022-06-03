@@ -7,21 +7,44 @@ import 'package:task_for_irene/src/utilits/format_date.dart';
 import '../utilits/fix.dart';
 
 class ActiveTaskView extends StatefulWidget {
-  const ActiveTaskView({Key? key, required this.task}) : super(key: key);
+  ActiveTaskView({Key? key, required Task task}) : super(key: key) {
+    localTask = task.getCopy();
+  }
 
-  final Task? task;
+  late final Task localTask;
 
   @override
   State<ActiveTaskView> createState() => _ActiveTaskViewState();
 }
 
 class _ActiveTaskViewState extends State<ActiveTaskView> {
-  late Task? task;
   late String title;
-  late String description;
-  late DateTime dueDate;
-  late TimeOfDay dueTime;
-  late String reminderFrequency;
+
+  String get description => widget.localTask.description;
+  set description(String string) => widget.localTask.description = string;
+
+  DateTime get dueDate => widget.localTask.dueDate;
+  set dueDate(DateTime dateTime) => widget.localTask.dueDate = DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+      dueTime.hour,
+      dueTime.minute);
+
+  TimeOfDay get dueTime => TimeOfDay(
+      hour: widget.localTask.dueDate.hour,
+      minute: widget.localTask.dueDate.minute);
+  set dueTime(TimeOfDay timeOfDay) => widget.localTask.dueDate = DateTime(
+      dueDate.year,
+      dueDate.month,
+      dueDate.day,
+      timeOfDay.hour,
+      timeOfDay.minute);
+
+  String get reminderFrequency => widget.localTask.reminderFrequency;
+  set reminderFrequency(String string) =>
+      widget.localTask.reminderFrequency = string;
+
   bool changed = false;
 
   void selectDate(BuildContext context) async {
@@ -30,16 +53,17 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(2500));
+
     if (selected != null && selected != dueDate) {
-      setState(() {
-        dueDate = selected;
-      });
+      dueDate = selected;
+      setState(() {});
     }
   }
 
   void selectTime(BuildContext context) async {
     final TimeOfDay? selected =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
     if (selected != null && selected != dueTime) {
       setState(() {
         dueTime = selected;
@@ -47,23 +71,12 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
     }
   }
 
-  String getDueDateText() {
-    return getDDMMYYYY(dueDate);
-  }
-
-  String getDueTimeText() {
-    return getHHMMTimeOfDay(dueTime);
-  }
-
   @override
   Widget build(BuildContext context) {
-    task = widget.task;
-    if (task == null) return const Text("empty");
-    title = task!.title;
-    description = task!.description;
-    dueDate = task!.dueDate;
-    dueTime = TimeOfDay(hour: dueDate.hour, minute: dueDate.minute);
-    reminderFrequency = task!.reminderFrequency;
+    title = widget.localTask.title;
+    description = widget.localTask.description;
+    dueDate = widget.localTask.dueDate;
+    reminderFrequency = widget.localTask.reminderFrequency;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -78,104 +91,33 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // title
-            _Title(task: task!),
+            _Title(
+              title: title,
+            ),
             const Divider(),
-
-            // description
-            TextFormField(
-              initialValue: description,
+            _DescriptionField(
+              description: description,
               onChanged: ((value) {
                 setState(() {
                   description = value;
                   changed = true;
                 });
               }),
-              maxLines: 3,
-              decoration: InputDecoration(
-                  label: Text(AppLocalizations.of(context)!
-                      .activeTaskViewTaskDescription)),
             ),
-
             const Divider(),
-
-            // due date
-            Text(AppLocalizations.of(context)!.activeTaskViewTaskDueDate),
-            Row(
-              children: [
-                Text(AppLocalizations.of(context)!
-                    .activeTaskViewTaskDueDateDate),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(1),
-                          backgroundColor:
-                              elevatedButtonBackgroundFix(context)),
-                      onPressed: () {
-                        selectDate(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(getDueDateText()),
-                      )),
-                ),
-              ],
-            ),
-
-            //due time
-            Row(
-              children: [
-                Text(AppLocalizations.of(context)!
-                    .activeTaskViewTaskDueDateTime),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(1),
-                          backgroundColor:
-                              elevatedButtonBackgroundFix(context)),
-                      onPressed: () {
-                        selectTime(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(getDueTimeText()),
-                      )),
-                ),
-              ],
-            ),
-
+            _DueDate(
+                dueDate: dueDate,
+                onPressedDate: () => selectDate(context),
+                onPressedTime: () => selectTime(context)),
             const Divider(),
-
-            // reminder frequency
-            Text(AppLocalizations.of(context)!
-                .activeTaskViewReminderFrequencyLabel),
-            DropdownButton<String>(
-                isExpanded: true,
-                value: reminderFrequency,
+            _ReminderFrequrency(
                 onChanged: (value) {
                   setState(() {
                     reminderFrequency = value!;
                   });
                 },
-                items: [
-                  DropdownMenuItem(
-                      value: ReminderFrequency.day,
-                      child: Text(
-                          AppLocalizations.of(context)!.reminderFrequencyDay)),
-                  DropdownMenuItem(
-                      value: ReminderFrequency.week,
-                      child: Text(
-                          AppLocalizations.of(context)!.reminderFrequencyWeek)),
-                  DropdownMenuItem(
-                      value: ReminderFrequency.month,
-                      child: Text(
-                          AppLocalizations.of(context)!.reminderFrequencyMonth))
-                ]),
-
+                reminderFrequency: reminderFrequency),
             const Divider(),
-
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Center(
@@ -183,26 +125,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
                     style: ButtonStyle(
                         elevation: MaterialStateProperty.all(1),
                         backgroundColor: elevatedButtonBackgroundFix(context)),
-                    onPressed: () {
-                      String error = _saveTest(context);
-                      if (error != "") {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            error,
-                            textAlign: TextAlign.center,
-                          ),
-                          behavior: SnackBarBehavior.floating,
-                          duration: const Duration(seconds: 2),
-                        ));
-                      } else {
-                        GlobalVar.appController.addTask(Task.newTask(
-                            title,
-                            description,
-                            getDue(dueDate, dueTime),
-                            reminderFrequency));
-                        Navigator.pop(context);
-                      }
-                    },
+                    onPressed: tapOnSaveButton,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -216,6 +139,23 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
         )),
       ),
     );
+  }
+
+  void tapOnSaveButton() {
+    String error = _saveTest(context);
+    if (error != "") {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          error,
+          textAlign: TextAlign.center,
+        ),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ));
+    } else {
+      GlobalVar.appController.update(widget.localTask);
+      Navigator.pop(context);
+    }
   }
 
   String _saveTest(BuildContext context) {
@@ -236,16 +176,133 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({Key? key, required this.task}) : super(key: key);
-  final Task task;
+  const _Title({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(task.title,
+      child: Text(title,
           overflow: TextOverflow.ellipsis,
           textScaleFactor: 1.3,
           textAlign: TextAlign.center),
+    );
+  }
+}
+
+class _DescriptionField extends StatelessWidget {
+  const _DescriptionField({Key? key, required this.description, this.onChanged})
+      : super(key: key);
+
+  final String description;
+  final void Function(String)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: description,
+      onChanged: onChanged,
+      maxLines: 3,
+      decoration: InputDecoration(
+          label: Text(
+              AppLocalizations.of(context)!.activeTaskViewTaskDescription)),
+    );
+  }
+}
+
+class _DueDate extends StatelessWidget {
+  const _DueDate(
+      {Key? key,
+      required this.dueDate,
+      required this.onPressedDate,
+      required this.onPressedTime})
+      : super(key: key);
+
+  final DateTime dueDate;
+  final void Function()? onPressedDate;
+  final void Function()? onPressedTime;
+  TimeOfDay get dueTime =>
+      TimeOfDay(hour: dueDate.hour, minute: dueDate.minute);
+
+  @override
+  Widget build(BuildContext context) {
+    var dueTime = TimeOfDay(hour: dueDate.hour, minute: dueDate.minute);
+    return Column(
+      children: [
+        Text(AppLocalizations.of(context)!.activeTaskViewTaskDueDate),
+        Row(
+          children: [
+            Text(AppLocalizations.of(context)!.activeTaskViewTaskDueDateDate),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(1),
+                      backgroundColor: elevatedButtonBackgroundFix(context)),
+                  onPressed: onPressedDate,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(getDDMMYYYY(dueDate)),
+                  )),
+            ),
+          ],
+        ),
+
+        //due time
+        Row(
+          children: [
+            Text(AppLocalizations.of(context)!.activeTaskViewTaskDueDateTime),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(1),
+                      backgroundColor: elevatedButtonBackgroundFix(context)),
+                  onPressed: onPressedTime,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(getHHMMTimeOfDay(dueTime)),
+                  )),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _ReminderFrequrency extends StatelessWidget {
+  const _ReminderFrequrency(
+      {Key? key, required this.onChanged, required this.reminderFrequency})
+      : super(key: key);
+  final void Function(String?)? onChanged;
+  final String reminderFrequency;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+            AppLocalizations.of(context)!.activeTaskViewReminderFrequencyLabel),
+        DropdownButton<String>(
+            isExpanded: true,
+            value: reminderFrequency,
+            onChanged: onChanged,
+            items: [
+              DropdownMenuItem(
+                  value: ReminderFrequency.day,
+                  child:
+                      Text(AppLocalizations.of(context)!.reminderFrequencyDay)),
+              DropdownMenuItem(
+                  value: ReminderFrequency.week,
+                  child: Text(
+                      AppLocalizations.of(context)!.reminderFrequencyWeek)),
+              DropdownMenuItem(
+                  value: ReminderFrequency.month,
+                  child: Text(
+                      AppLocalizations.of(context)!.reminderFrequencyMonth))
+            ]),
+      ],
     );
   }
 }

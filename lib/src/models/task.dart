@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/utilits/uuid.dart';
 
 class Task {
-  String id; //??
+  String id;
   String title;
   String description;
   DateTime dueDate;
@@ -47,6 +47,11 @@ class Task {
 
   void testDueDate() {
     if (status == StatusTask.active && dueDate.isBefore(DateTime.now())) fail();
+  }
+
+  Task getCopy() {
+    return Task(
+        id, title, description, dueDate, reminderFrequency, status, photoProof);
   }
 }
 

@@ -60,5 +60,7 @@
   "activeTaskViewTaskDueDateTime": "Time",
   "activeTaskViewReminderFrequencyLabel": "Reminder frequency:",
   "activeTaskViewSave": "Save",
-  "activeTaskViewErrorLate": "Due date has already arrived"
+  "activeTaskViewErrorLate": "Due date has already arrived",
+  "errorViewTitle": "Error",
+  "errorViewMessage": "Error"
 }
