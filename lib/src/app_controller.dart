@@ -86,10 +86,24 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteTaskAtId(String id) {
+    var idTasks = _tasks.where((element) => element.id == id);
+    if (idTasks.isEmpty) return;
+    Task deletedTask = idTasks.first;
+    deleteTask(deletedTask);
+  }
+
   void surrenderTask(Task task) {
     task.surrender();
     repository.update(task);
     notifyListeners();
+  }
+
+  void surrenderTaskAtId(String id) {
+    var idTasks = _tasks.where((element) => element.id == id);
+    if (idTasks.isEmpty) return;
+    Task surrendedTask = idTasks.first;
+    surrenderTask(surrendedTask);
   }
 
   // calendar controller

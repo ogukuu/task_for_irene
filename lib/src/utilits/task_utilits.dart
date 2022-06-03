@@ -3,20 +3,21 @@ import 'package:task_for_irene/src/utilits/uuid.dart';
 
 import '../models/task.dart';
 
-Widget getStatusImage(Task task) {
-  switch (task.status) {
+Widget getStatusImage({required String status, dynamic photoProof}) {
+  switch (status) {
     case StatusTask.fail:
       return Image.asset('assets/images/fail.png');
     case StatusTask.surrendered:
       return Image.asset('assets/images/surrendered.png');
     case StatusTask.success:
-      return task.photoProof ??
+      return photoProof ??
           Image.asset('assets/images/error_not_found_proof.png');
     default:
       return Image.asset('assets/images/error.png');
   }
 }
 
+/// ___ TEST. DELETE LATER ___
 var testTask = Task(
     UUID.getNew,
     'title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2 title2',
@@ -26,6 +27,7 @@ var testTask = Task(
     StatusTask.active,
     null);
 
+/// ___ TEST. DELETE LATER ___
 List<Task> testTasks = [
   Task(
       UUID.getNew,
@@ -54,3 +56,7 @@ List<Task> testTasks = [
   Task(UUID.getNew, 'title7', 'description7', DateTime(2050),
       ReminderFrequency.week, StatusTask.active, null),
 ];
+
+/// ___ TEST. DELETE LATER ___
+String testDescription(Task task) =>
+    "${task.description} ${task.testDescription()}";

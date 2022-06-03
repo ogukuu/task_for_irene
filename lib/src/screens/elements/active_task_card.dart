@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/global_var.dart';
+import 'package:task_for_irene/src/utilits/task_utilits.dart';
 import '../../models/task.dart';
 import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
@@ -16,9 +17,10 @@ class ActiveTaskCard extends StatelessWidget {
       child: Card(
           elevation: 1,
           child: Column(children: [
-            _ActiveTaskTitle(task: task),
+            _ActiveTaskTitle(
+                title: task.title, id: task.id, dueDate: task.dueDate),
             const Divider(height: 0, indent: 10, endIndent: 10),
-            _ActiveTaskDescription(task: task)
+            _ActiveTaskDescription(description: testDescription(task))
           ])),
     );
   }
@@ -27,26 +29,28 @@ class ActiveTaskCard extends StatelessWidget {
 class _ActiveTaskDescription extends StatelessWidget {
   const _ActiveTaskDescription({
     Key? key,
-    required this.task,
+    required this.description,
   }) : super(key: key);
 
-  final Task task;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.all(10),
-        child: Text(
-          "${task.description} ${task.testDescription()}",
-        ));
+        child: Text(description));
   }
 }
 
 class _ActiveTaskTitle extends StatelessWidget {
-  const _ActiveTaskTitle({Key? key, required this.task}) : super(key: key);
+  const _ActiveTaskTitle(
+      {Key? key, required this.title, required this.id, required this.dueDate})
+      : super(key: key);
 
-  final Task task;
+  final String title;
+  final String id;
+  final DateTime dueDate;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _ActiveTaskTitle extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.all(10),
             child: Text(
-              task.title,
+              title,
               overflow: TextOverflow.ellipsis,
               textScaleFactor: 1.3,
             ),
@@ -69,21 +73,20 @@ class _ActiveTaskTitle extends StatelessWidget {
           child: Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.all(10),
-              child: Text("due date: ${formatDate(task.dueDate)}")),
+              child: Text("due date: ${formatDate(dueDate)}")),
         ),
         Expanded(
             flex: 1,
             child: Container(
-                alignment: Alignment.centerRight,
-                child: _ActionButton(task: task)))
+                alignment: Alignment.centerRight, child: _ActionButton(id: id)))
       ],
     );
   }
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({Key? key, required this.task}) : super(key: key);
-  final Task task;
+  const _ActionButton({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<Actions>(
@@ -94,12 +97,12 @@ class _ActionButton extends StatelessWidget {
         onSelected: (Actions item) {
           switch (item) {
             case Actions.delete:
-              GlobalVar.appController.deleteTask(task);
+              GlobalVar.appController.deleteTaskAtId(id);
               break;
             case Actions.proof:
               break;
             case Actions.surrender:
-              GlobalVar.appController.surrenderTask(task);
+              GlobalVar.appController.surrenderTaskAtId(id);
               break;
           }
         },

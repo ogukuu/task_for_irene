@@ -50,7 +50,7 @@ class _ProofPhoto extends StatelessWidget {
   final Task task;
   @override
   Widget build(BuildContext context) {
-    return getStatusImage(task);
+    return getStatusImage(status: task.status, photoProof: task.photoProof);
   }
 }
 

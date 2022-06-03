@@ -25,8 +25,7 @@ class NavRoute {
     }
     if (route.startsWith(activeTask)) {
       String id = route.replaceFirst(activeTask, ""); //no validation
-      return ActiveTaskView(
-          controller: controller, task: controller.getTask(id));
+      return ActiveTaskView(task: controller.getTask(id));
     }
     if (route.startsWith(comletedTask)) {
       String id = route.replaceFirst(comletedTask, ""); //no validation

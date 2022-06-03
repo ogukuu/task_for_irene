@@ -17,12 +17,7 @@ class TasksView extends StatelessWidget {
       length: 2,
       initialIndex: 0,
       child: Scaffold(
-          floatingActionButton: MyFloatingActionButton(
-            context: context,
-            onPressed: () {
-              Navigator.restorablePushNamed(context, NavRoute.addTask);
-            },
-          ),
+          floatingActionButton: AddTaskFloatingActionButton(context: context),
           appBar: AppBar(
             elevation: 2,
             automaticallyImplyLeading: false,
@@ -61,8 +56,10 @@ class TasksView extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              ActiveTasksList(),
-              CompletedTasksList(controller: controller)
+              ActiveTasksList(tasks: controller.activeTasks),
+              CompletedTasksList(
+                tasks: controller.completedTasks,
+              )
             ],
           )),
     );

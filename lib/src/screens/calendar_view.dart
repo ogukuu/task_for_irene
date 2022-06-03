@@ -26,12 +26,7 @@ class CalendarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: MyFloatingActionButton(
-        context: context,
-        onPressed: () {
-          Navigator.restorablePushNamed(context, NavRoute.addTask);
-        },
-      ),
+      floatingActionButton: AddTaskFloatingActionButton(context: context),
       appBar: AppBar(
         elevation: 2,
         automaticallyImplyLeading: false,
@@ -68,7 +63,7 @@ class CalendarView extends StatelessWidget {
               if (tasks[index - 2].status == StatusTask.active) {
                 return ActiveTaskCard(task: tasks[index - 2]);
               } else {
-                return CompletedTaskCard(tasks[index - 2]);
+                return CompletedTaskCard(task: tasks[index - 2]);
               }
             },
           ))
