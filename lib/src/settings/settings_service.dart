@@ -4,17 +4,18 @@ import 'package:hive/hive.dart';
 class SettingsService {
   static String settingsBoxName = "settingsBoxName";
   static String themeModeSettingKey = "themeModeSettingKey";
-  final Future<Box<String>> _settingsBox =
-      Hive.openBox<String>(settingsBoxName);
+  late Box<String> settingsBox;
+
+  Future<void> init() async {
+    settingsBox = await Hive.openBox<String>(settingsBoxName);
+  }
 
   Future<ThemeMode> themeMode() async {
-    var settingsBox = await _settingsBox;
     return MyThemeMode.getThemeMode(
         settingsBox.get(themeModeSettingKey) ?? MyThemeMode.system);
   }
 
   Future<void> updateThemeMode(ThemeMode theme) async {
-    var settingsBox = await _settingsBox;
     settingsBox.put(themeModeSettingKey, MyThemeMode.getNameThemeMode(theme));
   }
 }

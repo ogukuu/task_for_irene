@@ -30,8 +30,7 @@ class NavRoute {
     }
     if (route.startsWith(comletedTask)) {
       String id = route.replaceFirst(comletedTask, ""); //no validation
-      return CompletedTaskView(
-          controller: controller, task: controller.getTask(id));
+      return CompletedTaskView(task: controller.getTask(id));
     }
     switch (route) {
       case addTask:

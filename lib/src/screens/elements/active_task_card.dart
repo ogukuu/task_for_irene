@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/app_controller.dart';
+import 'package:task_for_irene/src/global_var.dart';
 import '../../models/task.dart';
 import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
 
 class ActiveTaskCard extends StatelessWidget {
-  const ActiveTaskCard({Key? key, required this.controller, required this.task})
-      : super(key: key);
+  const ActiveTaskCard({Key? key, required this.task}) : super(key: key);
   final Task task;
-  final AppController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +16,7 @@ class ActiveTaskCard extends StatelessWidget {
       child: Card(
           elevation: 1,
           child: Column(children: [
-            _ActiveTaskTitle(
-              task: task,
-              controller: controller,
-            ),
+            _ActiveTaskTitle(task: task),
             const Divider(height: 0, indent: 10, endIndent: 10),
             _ActiveTaskDescription(task: task)
           ])),
@@ -49,14 +44,9 @@ class _ActiveTaskDescription extends StatelessWidget {
 }
 
 class _ActiveTaskTitle extends StatelessWidget {
-  const _ActiveTaskTitle({
-    Key? key,
-    required this.task,
-    required this.controller,
-  }) : super(key: key);
+  const _ActiveTaskTitle({Key? key, required this.task}) : super(key: key);
 
   final Task task;
-  final AppController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +75,14 @@ class _ActiveTaskTitle extends StatelessWidget {
             flex: 1,
             child: Container(
                 alignment: Alignment.centerRight,
-                child: _ActionButton(
-                  controller: controller,
-                  task: task,
-                )))
+                child: _ActionButton(task: task)))
       ],
     );
   }
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({Key? key, required this.controller, required this.task})
-      : super(key: key);
-  final AppController controller;
+  const _ActionButton({Key? key, required this.task}) : super(key: key);
   final Task task;
   @override
   Widget build(BuildContext context) {
@@ -109,12 +94,12 @@ class _ActionButton extends StatelessWidget {
         onSelected: (Actions item) {
           switch (item) {
             case Actions.delete:
-              controller.deleteTask(task);
+              GlobalVar.appController.deleteTask(task);
               break;
             case Actions.proof:
               break;
             case Actions.surrender:
-              controller.surrenderTask(task);
+              GlobalVar.appController.surrenderTask(task);
               break;
           }
         },

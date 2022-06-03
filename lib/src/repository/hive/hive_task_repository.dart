@@ -30,7 +30,7 @@ class HiveTaskRepository extends TaskRepository {
 
   @override
   Future<void> init() async {
-    await Hive.initFlutter(); //??? settings!!!
+    await Hive.initFlutter();
     Hive.registerAdapter(TaskAdapter());
     box = await Hive.openBox<Task>(nameBox);
     super.init();
