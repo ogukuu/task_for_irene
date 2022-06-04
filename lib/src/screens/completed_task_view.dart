@@ -19,13 +19,22 @@ class CompletedTaskView extends StatelessWidget {
   }
 
   Widget _bogy() {
-    return Column(children: [
+    List<Widget> widgets = [
       _Title(task: task),
       const Divider(),
       _ProofPhoto(task: task),
       const Divider(),
       _Description(task: task)
-    ]);
+    ];
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          childCount: 5,
+          (context, index) => widgets[index],
+        ))
+      ],
+    );
   }
 }
 
@@ -49,7 +58,10 @@ class _ProofPhoto extends StatelessWidget {
   final Task task;
   @override
   Widget build(BuildContext context) {
-    return getStatusImage(status: task.status, photoProof: task.photoProof);
+    return FittedBox(
+        fit: BoxFit.cover,
+        child:
+            getStatusImage(status: task.status, photoProof: task.photoProof));
   }
 }
 

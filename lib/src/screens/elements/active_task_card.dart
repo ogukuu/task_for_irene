@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/utilits/task_utilits.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -103,8 +105,7 @@ class _ActionButton extends StatelessWidget {
               GlobalVar.appController.deleteTaskAtId(id);
               break;
             case Actions.proof:
-              if (Platform.isAndroid) print("proof");
-              ;
+              _addProof(id);
               break;
             case Actions.surrender:
               GlobalVar.appController.surrenderTaskAtId(id);
@@ -132,3 +133,13 @@ class _ActionButton extends StatelessWidget {
 }
 
 enum Actions { delete, surrender, proof }
+
+void _addProof(String id) async {
+  if (!Platform.isAndroid) return null;
+  final ImagePicker picker = ImagePicker();
+  XFile? pickImage = await picker.pickImage(source: ImageSource.gallery);
+  if (pickImage != null) {
+    Uint8List image = await pickImage.readAsBytes();
+    GlobalVar.appController.proofTask(id, image);
+  }
+}

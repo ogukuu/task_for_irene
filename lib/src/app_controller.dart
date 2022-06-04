@@ -105,6 +105,17 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
+  bool isNotCorrect(String id) => getTasksAtId(id).isEmpty;
+
+  void proofTask(String id, dynamic proof) {
+    if (proof == null) return;
+    if (isNotCorrect(id)) return;
+    var task = getTasksAtId(id).first;
+    if (task.isCompleted) return;
+    task.success(proof);
+    update(task);
+  }
+
   // calendar controller
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));

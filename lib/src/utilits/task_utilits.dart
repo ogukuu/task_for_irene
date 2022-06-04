@@ -10,8 +10,12 @@ Widget getStatusImage({required String status, dynamic photoProof}) {
     case StatusTask.surrendered:
       return Image.asset('assets/images/surrendered.png');
     case StatusTask.success:
-      return photoProof ??
-          Image.asset('assets/images/error_not_found_proof.png');
+      if (photoProof == null) {
+        return Image.asset('assets/images/error_not_found_proof.png');
+      } else {
+        return Image.memory(photoProof);
+      }
+
     default:
       return Image.asset('assets/images/error.png');
   }
