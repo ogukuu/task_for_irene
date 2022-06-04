@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/app_controller.dart';
+import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/screens/active_task_view.dart';
 import 'package:task_for_irene/src/screens/error_view.dart';
@@ -11,9 +11,6 @@ import '../screens/tasks_view.dart';
 import '../settings/settings_view.dart';
 
 class NavRoute {
-  NavRoute({required this.controller});
-  AppController controller;
-
   static const addTask = "/add_task";
   static const settings = "/settings";
   static const calendar = "/calendar";
@@ -28,28 +25,29 @@ class NavRoute {
     }
     if (route.startsWith(activeTask)) {
       String id = route.replaceFirst(activeTask, "");
-      List<Task> tasks = controller.getTasksAtId(id); //no validation
+      List<Task> tasks =
+          GlobalVar.appController.getTasksAtId(id); //no validation
       if (tasks.isEmpty) return const ErrorView();
       return ActiveTaskView(task: tasks.first);
     }
     if (route.startsWith(comletedTask)) {
       String id = route.replaceFirst(comletedTask, ""); //no validation
-      List<Task> tasks = controller.getTasksAtId(id);
+      List<Task> tasks = GlobalVar.appController.getTasksAtId(id);
       if (tasks.isEmpty) return const ErrorView();
       return CompletedTaskView(task: tasks.first);
     }
     switch (route) {
       case addTask:
-        return AddTaskView(controller: controller);
+        return const AddTaskView();
       case settings:
-        return SettingsView(controller: controller);
+        return const SettingsView();
       case tasks:
-        return TasksView(controller: controller);
+        return TasksView(tasks: GlobalVar.appController.tasks);
       case error:
         return const ErrorView();
       case calendar:
       default:
-        return CalendarView(controller: controller);
+        return CalendarView(activeTasks: GlobalVar.appController.activeTasks);
     }
   }
 }

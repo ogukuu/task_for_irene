@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/models/task.dart';
-import 'package:task_for_irene/src/app_controller.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 import '../utilits/fix.dart';
 
 class AddTaskView extends StatefulWidget {
-  const AddTaskView({Key? key, required this.controller}) : super(key: key);
-
-  final AppController controller;
+  const AddTaskView({Key? key}) : super(key: key);
 
   @override
   State<AddTaskView> createState() => _AddTaskViewState();
@@ -176,7 +174,7 @@ class _AddTaskViewState extends State<AddTaskView> {
                           duration: const Duration(seconds: 2),
                         ));
                       } else {
-                        widget.controller.addTask(Task.newTask(
+                        GlobalVar.appController.addTask(Task.newTask(
                             title!,
                             description!,
                             getDue(dueDate!, dueTime),

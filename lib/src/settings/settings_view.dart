@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/navigation/nav_route.dart';
-import '../app_controller.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({Key? key, required this.controller}) : super(key: key);
-
-  final AppController controller;
+  const SettingsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,36 +13,31 @@ class SettingsView extends StatelessWidget {
         elevation: 2,
         title: Text(AppLocalizations.of(context)!.settingsViewTitle),
       ),
-      body: Column(children: [
-        _ThemeModeSetting(controller: controller),
-        const Divider(
+      body: Column(children: const [
+        _ThemeModeSetting(),
+        Divider(
           height: 100,
         ),
-        _DangerButton(controller: controller),
-        const Divider(
+        _DangerButton(),
+        Divider(
           height: 100,
         ),
-        _TestErrorButton(controller: controller)
+        _TestErrorButton()
       ]),
     );
   }
 }
 
 class _ThemeModeSetting extends StatelessWidget {
-  const _ThemeModeSetting({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  final AppController controller;
+  const _ThemeModeSetting({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: DropdownButton<ThemeMode>(
-        value: controller.themeMode,
-        onChanged: controller.updateThemeMode,
+        value: GlobalVar.appController.themeMode,
+        onChanged: GlobalVar.appController.updateThemeMode,
         items: [
           DropdownMenuItem(
             value: ThemeMode.system,
@@ -65,8 +58,7 @@ class _ThemeModeSetting extends StatelessWidget {
 }
 
 class _DangerButton extends StatelessWidget {
-  const _DangerButton({Key? key, required this.controller}) : super(key: key);
-  final AppController controller;
+  const _DangerButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +66,7 @@ class _DangerButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.amber.shade900)),
         onPressed: (() {
-          controller.clear();
+          GlobalVar.appController.clear();
         }),
         child: const Padding(
           padding: EdgeInsets.all(8.0),
@@ -88,9 +80,7 @@ class _DangerButton extends StatelessWidget {
 }
 
 class _TestErrorButton extends StatelessWidget {
-  const _TestErrorButton({Key? key, required this.controller})
-      : super(key: key);
-  final AppController controller;
+  const _TestErrorButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

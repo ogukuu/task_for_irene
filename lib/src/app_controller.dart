@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/navigation/nav_route.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 
 import 'calendar/calendar_controller.dart';
@@ -8,9 +7,7 @@ import 'models/task.dart';
 import 'settings/settings_service.dart';
 
 class AppController with ChangeNotifier {
-  AppController({required this.settingsService, required this.repository}) {
-    navRoute = NavRoute(controller: this);
-  }
+  AppController({required this.settingsService, required this.repository});
 
   //setting controller
 
@@ -111,7 +108,4 @@ class AppController with ChangeNotifier {
   // calendar controller
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));
-
-  // navigation
-  late final NavRoute navRoute;
 }

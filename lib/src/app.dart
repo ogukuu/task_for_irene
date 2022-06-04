@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'app_controller.dart';
+import 'package:task_for_irene/src/global_var.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.appController}) : super(key: key);
-
-  final AppController appController;
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: appController,
+      animation: GlobalVar.appController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -29,12 +27,12 @@ class MyApp extends StatelessWidget {
               AppLocalizations.of(context)!.appTitle,
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: appController.themeMode,
+          themeMode: GlobalVar.appController.themeMode,
           onGenerateRoute: (RouteSettings routeSettings) {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
-                return appController.navRoute.route(routeSettings.name);
+                return GlobalVar.navRoute.route(routeSettings.name);
               },
             );
           },

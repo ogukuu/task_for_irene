@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/utilits/task_utilits.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/task.dart';
 import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
@@ -100,6 +103,8 @@ class _ActionButton extends StatelessWidget {
               GlobalVar.appController.deleteTaskAtId(id);
               break;
             case Actions.proof:
+              if (Platform.isAndroid) print("proof");
+              ;
               break;
             case Actions.surrender:
               GlobalVar.appController.surrenderTaskAtId(id);
@@ -107,18 +112,21 @@ class _ActionButton extends StatelessWidget {
           }
         },
         itemBuilder: (BuildContext context) => <PopupMenuEntry<Actions>>[
-              const PopupMenuItem<Actions>(
-                value: Actions.delete,
-                child: Text('delete'),
-              ),
-              const PopupMenuItem<Actions>(
-                value: Actions.surrender,
-                child: Text('surrender'),
-              ),
-              const PopupMenuItem<Actions>(
+              PopupMenuItem<Actions>(
                 value: Actions.proof,
-                child: Text('proof'),
+                child: Text(AppLocalizations.of(context)!
+                    .activeTaskCardActionProvideProof),
               ),
+              PopupMenuItem<Actions>(
+                value: Actions.surrender,
+                child: Text(AppLocalizations.of(context)!
+                    .activeTaskCardActionSurrender),
+              ),
+              PopupMenuItem<Actions>(
+                value: Actions.delete,
+                child: Text(
+                    AppLocalizations.of(context)!.activeTaskCardActionDelete),
+              )
             ]);
   }
 }

@@ -118,23 +118,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
                 },
                 reminderFrequency: reminderFrequency),
             const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Center(
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(1),
-                        backgroundColor: elevatedButtonBackgroundFix(context)),
-                    onPressed: tapOnSaveButton,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        AppLocalizations.of(context)!.activeTaskViewSave,
-                        textScaleFactor: 1.3,
-                      ),
-                    )),
-              ),
-            )
+            _SaveButton(onPressed: tapOnSaveButton)
           ],
         )),
       ),
@@ -303,6 +287,31 @@ class _ReminderFrequrency extends StatelessWidget {
                       AppLocalizations.of(context)!.reminderFrequencyMonth))
             ]),
       ],
+    );
+  }
+}
+
+class _SaveButton extends StatelessWidget {
+  const _SaveButton({Key? key, required this.onPressed}) : super(key: key);
+  final void Function()? onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Center(
+        child: ElevatedButton(
+            style: ButtonStyle(
+                elevation: MaterialStateProperty.all(1),
+                backgroundColor: elevatedButtonBackgroundFix(context)),
+            onPressed: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)!.activeTaskViewSave,
+                textScaleFactor: 1.3,
+              ),
+            )),
+      ),
     );
   }
 }

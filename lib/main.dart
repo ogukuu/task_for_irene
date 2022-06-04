@@ -28,6 +28,6 @@ class _InitAppState extends State<_InitApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MyApp(appController: GlobalVar.appController);
+    return const MyApp();
   }
 }

@@ -6,7 +6,7 @@ import '../models/task.dart';
 class CompletedTaskView extends StatelessWidget {
   const CompletedTaskView({Key? key, required this.task}) : super(key: key);
 
-  final Task? task;
+  final Task task;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,12 @@ class CompletedTaskView extends StatelessWidget {
   }
 
   Widget _bogy() {
-    if (task == null) return const Text("empty");
     return Column(children: [
-      _Title(task: task!),
+      _Title(task: task),
       const Divider(),
-      _ProofPhoto(task: task!),
+      _ProofPhoto(task: task),
       const Divider(),
-      _Description(task: task!)
+      _Description(task: task)
     ]);
   }
 }

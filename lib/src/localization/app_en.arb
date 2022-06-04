@@ -62,5 +62,8 @@
   "activeTaskViewSave": "Save",
   "activeTaskViewErrorLate": "Due date has already arrived",
   "errorViewTitle": "Error",
-  "errorViewMessage": "Error"
+  "errorViewMessage": "Error",
+  "activeTaskCardActionDelete": "Delete",
+  "activeTaskCardActionSurrender": "Surrender",
+  "activeTaskCardActionProvideProof": "ProvideProof"
 }
