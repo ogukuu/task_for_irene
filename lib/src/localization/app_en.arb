@@ -65,5 +65,7 @@
   "errorViewMessage": "Error",
   "activeTaskCardActionDelete": "Delete",
   "activeTaskCardActionSurrender": "Surrender",
-  "activeTaskCardActionProvideProof": "ProvideProof"
+  "activeTaskCardActionProvideProofGallery": "Complete. Gallery..",
+  "activeTaskCardActionProvideProofCamera": "Complete. Camera..",
+  "activeTaskCardActionEdit": "Edit.."
 }

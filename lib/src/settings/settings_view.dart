@@ -8,21 +8,28 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double indent = MediaQuery.of(context).size.width / 12;
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: Text(AppLocalizations.of(context)!.settingsViewTitle),
       ),
-      body: Column(children: const [
-        _ThemeModeSetting(),
+      body: Column(children: [
+        const _ThemeModeSetting(),
         Divider(
+          thickness: 1,
+          indent: indent,
+          endIndent: indent,
           height: 100,
         ),
-        _DangerButton(),
+        const _DangerButton(),
         Divider(
+          thickness: 1,
+          indent: indent,
+          endIndent: indent,
           height: 100,
         ),
-        _TestErrorButton()
+        const _TestErrorButton()
       ]),
     );
   }

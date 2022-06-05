@@ -11,24 +11,42 @@ class CompletedTaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double maxWidthProofPhoto = MediaQuery.of(context).size.width / 3;
+    final double indent = maxWidthProofPhoto / 4;
     return GestureDetector(
       onTap: (() => Navigator.restorablePushNamed(
           context, NavRoute.comletedTask + task.id)),
-      child: Card(
-          elevation: 1,
-          child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              verticalDirection: VerticalDirection.down,
-              children: [
-                _ProofPhoto(
-                    maxSize: maxWidthProofPhoto,
-                    status: task.status,
-                    photoProof: task.photoProof),
-                Expanded(
-                    child: _TaskInfo(
-                        title: task.title,
-                        description: testDescription(task))) // TEST
-              ])),
+      child: Column(
+        children: [
+          Divider(
+            thickness: 1,
+            height: 0,
+            endIndent: indent,
+            indent: indent,
+          ),
+          Padding(
+            padding: EdgeInsets.all(indent / 8),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                verticalDirection: VerticalDirection.down,
+                children: [
+                  _ProofPhoto(
+                      maxSize: maxWidthProofPhoto,
+                      status: task.status,
+                      photoProof: task.photoProof),
+                  Expanded(
+                      child: _TaskInfo(
+                          title: task.title,
+                          description: testDescription(task))) // TEST
+                ]),
+          ),
+          Divider(
+            thickness: 1,
+            height: 0,
+            endIndent: indent,
+            indent: indent,
+          )
+        ],
+      ),
     );
   }
 }
@@ -51,12 +69,13 @@ class _ProofPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     double currentSize = defSize > maxSize ? maxSize : defSize;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(3.0),
       child: SizedBox(
           width: currentSize,
           height: currentSize,
           child: Card(
-              clipBehavior: Clip.hardEdge,
+              elevation: 1,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               child: FittedBox(
                   fit: BoxFit.cover,
                   child:
@@ -77,13 +96,24 @@ class _TaskInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          title,
-          overflow: TextOverflow.ellipsis,
-          textScaleFactor: 1.3,
+        Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            textScaleFactor: 1.2,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        const Divider(height: 16, indent: 10, endIndent: 10),
-        Text(description)
+        Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Text(
+            description,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+            style: const TextStyle(fontStyle: FontStyle.italic),
+          ),
+        )
       ]),
     );
   }

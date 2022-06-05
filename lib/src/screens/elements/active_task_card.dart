@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/utilits/task_utilits.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/task.dart';
 import '../../navigation/nav_route.dart';
@@ -16,76 +15,94 @@ class ActiveTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double indent = MediaQuery.of(context).size.width / 12;
+    final double padding = indent / 4;
     return GestureDetector(
       onTap: (() => Navigator.restorablePushNamed(
           context, NavRoute.activeTask + task.id)),
-      child: Card(
-          elevation: 1,
-          child: Column(children: [
-            _ActiveTaskTitle(
-                title: task.title, id: task.id, dueDate: task.dueDate),
-            const Divider(height: 0, indent: 10, endIndent: 10),
-            _ActiveTaskDescription(description: testDescription(task))
-          ])),
+      child: Column(children: [
+        Divider(
+          thickness: 1,
+          height: 0,
+          endIndent: indent,
+          indent: indent,
+        ),
+        Padding(
+          padding: EdgeInsets.all(padding),
+          child: _Body(
+            title: task.title,
+            dueDate: task.dueDate,
+            id: task.id,
+          ),
+        ),
+        Divider(
+          thickness: 1,
+          height: 0,
+          endIndent: indent,
+          indent: indent,
+        ),
+      ]),
     );
   }
 }
 
-class _ActiveTaskDescription extends StatelessWidget {
-  const _ActiveTaskDescription({
-    Key? key,
-    required this.description,
-  }) : super(key: key);
-
-  final String description;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.all(10),
-        child: Text(description));
-  }
-}
-
-class _ActiveTaskTitle extends StatelessWidget {
-  const _ActiveTaskTitle(
-      {Key? key, required this.title, required this.id, required this.dueDate})
+class _Body extends StatelessWidget {
+  const _Body(
+      {Key? key, required this.title, required this.dueDate, required this.id})
       : super(key: key);
-
   final String title;
-  final String id;
   final DateTime dueDate;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              textScaleFactor: 1.3,
-            ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: _DueDate(dueDate: dueDate),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: _Title(title: title),
+              )
+            ],
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.all(10),
-              child: Text("due date: ${formatDate(dueDate)}")),
-        ),
-        Expanded(
-            flex: 1,
-            child: Container(
-                alignment: Alignment.centerRight, child: _ActionButton(id: id)))
+        _ActionButton(id: id)
       ],
     );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      overflow: TextOverflow.ellipsis,
+      textScaleFactor: 1.2,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    );
+  }
+}
+
+class _DueDate extends StatelessWidget {
+  const _DueDate({Key? key, required this.dueDate}) : super(key: key);
+  final DateTime dueDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(getDDMMYYYY(dueDate));
   }
 }
 
@@ -104,40 +121,148 @@ class _ActionButton extends StatelessWidget {
             case Actions.delete:
               GlobalVar.appController.deleteTaskAtId(id);
               break;
-            case Actions.proof:
-              _addProof(id);
+            case Actions.proofGallery:
+              _addProofGallery(id);
               break;
             case Actions.surrender:
               GlobalVar.appController.surrenderTaskAtId(id);
               break;
+            case Actions.proofCamera:
+              _addProofCamera(id);
+              break;
+            case Actions.edit:
+              Navigator.restorablePushNamed(context, NavRoute.activeTask + id);
+              break;
           }
         },
-        itemBuilder: (BuildContext context) => <PopupMenuEntry<Actions>>[
+        itemBuilder: (BuildContext context) => const <PopupMenuEntry<Actions>>[
               PopupMenuItem<Actions>(
-                value: Actions.proof,
-                child: Text(AppLocalizations.of(context)!
-                    .activeTaskCardActionProvideProof),
+                value: Actions.proofGallery,
+                child: _ActionProofGallery(),
+              ),
+              PopupMenuItem<Actions>(
+                value: Actions.proofCamera,
+                child: _ActionProofCamera(),
+              ),
+              PopupMenuItem<Actions>(
+                value: Actions.edit,
+                child: _ActionEdit(),
               ),
               PopupMenuItem<Actions>(
                 value: Actions.surrender,
-                child: Text(AppLocalizations.of(context)!
-                    .activeTaskCardActionSurrender),
+                child: _ActionSurrender(),
               ),
               PopupMenuItem<Actions>(
                 value: Actions.delete,
-                child: Text(
-                    AppLocalizations.of(context)!.activeTaskCardActionDelete),
+                child: _ActionDelete(),
               )
             ]);
   }
 }
 
-enum Actions { delete, surrender, proof }
+class _ActionProofCamera extends StatelessWidget {
+  const _ActionProofCamera({
+    Key? key,
+  }) : super(key: key);
 
-void _addProof(String id) async {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.add_a_photo_outlined),
+        const VerticalDivider(),
+        Text(AppLocalizations.of(context)!
+            .activeTaskCardActionProvideProofCamera),
+      ],
+    );
+  }
+}
+
+class _ActionProofGallery extends StatelessWidget {
+  const _ActionProofGallery({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.photo_library_outlined),
+        const VerticalDivider(),
+        Text(AppLocalizations.of(context)!
+            .activeTaskCardActionProvideProofGallery),
+      ],
+    );
+  }
+}
+
+class _ActionDelete extends StatelessWidget {
+  const _ActionDelete({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.delete_forever_outlined),
+        const VerticalDivider(),
+        Text(AppLocalizations.of(context)!.activeTaskCardActionDelete),
+      ],
+    );
+  }
+}
+
+class _ActionSurrender extends StatelessWidget {
+  const _ActionSurrender({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.sentiment_dissatisfied),
+        const VerticalDivider(),
+        Text(AppLocalizations.of(context)!.activeTaskCardActionSurrender),
+      ],
+    );
+  }
+}
+
+class _ActionEdit extends StatelessWidget {
+  const _ActionEdit({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.edit_outlined),
+        const VerticalDivider(),
+        Text(AppLocalizations.of(context)!.activeTaskCardActionEdit),
+      ],
+    );
+  }
+}
+
+enum Actions { delete, surrender, proofGallery, proofCamera, edit }
+
+void _addProofGallery(String id) async {
   if (!Platform.isAndroid) return null;
   final ImagePicker picker = ImagePicker();
   XFile? pickImage = await picker.pickImage(source: ImageSource.gallery);
+  if (pickImage != null) {
+    Uint8List image = await pickImage.readAsBytes();
+    GlobalVar.appController.proofTask(id, image);
+  }
+}
+
+void _addProofCamera(String id) async {
+  if (!Platform.isAndroid) return null;
+  final ImagePicker picker = ImagePicker();
+  XFile? pickImage = await picker.pickImage(source: ImageSource.camera);
   if (pickImage != null) {
     Uint8List image = await pickImage.readAsBytes();
     GlobalVar.appController.proofTask(id, image);

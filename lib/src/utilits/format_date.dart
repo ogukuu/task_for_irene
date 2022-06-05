@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-String formatDate(DateTime dateTime) {
-  return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-}
-
 String getDDMMYYYY(DateTime dateTime) {
   int d = dateTime.day;
   int m = dateTime.month;

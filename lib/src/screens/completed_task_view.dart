@@ -58,10 +58,13 @@ class _ProofPhoto extends StatelessWidget {
   final Task task;
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-        fit: BoxFit.cover,
-        child:
-            getStatusImage(status: task.status, photoProof: task.photoProof));
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: FittedBox(
+          fit: BoxFit.cover,
+          child:
+              getStatusImage(status: task.status, photoProof: task.photoProof)),
+    );
   }
 }
 

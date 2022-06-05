@@ -15,7 +15,7 @@ class CalendarMonthForm extends StatelessWidget {
 
   List<TableRow> _getTableRow() {
     List<DateTime> days =
-        controller.period.getExtendedMonthDates(DateTime.monday);
+        controller.period.getExtendedMonthDates(controller.firstDayOfTheWeek);
     List<TableRow> tableRowList = [];
     for (var i = 0; i < days.length ~/ 7; i++) {
       tableRowList.add(TableRow(

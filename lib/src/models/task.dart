@@ -13,6 +13,13 @@ class Task {
 
   bool get isActive => status == StatusTask.active;
   bool get isCompleted => !isActive;
+  bool isAtThisYear(DateTime dateTime) => dueDate.year == dateTime.year;
+  bool isAtThisMonth(DateTime dateTime) =>
+      isAtThisYear(dateTime) && (dueDate.month == dateTime.month);
+  bool isAtThisDay(DateTime dateTime) =>
+      isAtThisMonth(dateTime) && (dueDate.day == dateTime.day);
+  bool isAtThisHour(DateTime dateTime) =>
+      isAtThisDay(dateTime) && (dueDate.hour == dateTime.hour);
 
   Task(this.id, this.title, this.description, this.dueDate,
       this.reminderFrequency, this.status, this.photoProof);
