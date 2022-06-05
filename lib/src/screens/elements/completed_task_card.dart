@@ -96,22 +96,28 @@ class _TaskInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            textScaleFactor: 1.2,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+        SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              textScaleFactor: 1.2,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Text(
-            description,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            style: const TextStyle(fontStyle: FontStyle.italic),
+        SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Text(
+              description,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
           ),
         )
       ]),

@@ -87,11 +87,14 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      overflow: TextOverflow.ellipsis,
-      textScaleFactor: 1.2,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+    return SizedBox(
+      width: double.infinity,
+      child: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+        textScaleFactor: 1.2,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
@@ -102,7 +105,7 @@ class _DueDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(getDDMMYYYY(dueDate));
+    return SizedBox(width: double.infinity, child: Text(getDDMMYYYY(dueDate)));
   }
 }
 

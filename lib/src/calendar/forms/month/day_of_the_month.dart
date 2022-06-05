@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 
@@ -9,6 +11,9 @@ class DayOfTheMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool active = date.month == controller.period.month;
+    double elevation = (active) ? 2 : 0;
+    double sigma = (active) ? 1 : 0;
     return GestureDetector(
       onTap: () => controller.updatePeriodType(controller.period.down(date)),
       child: Padding(
@@ -17,7 +22,7 @@ class DayOfTheMonth extends StatelessWidget {
             width: 50,
             height: 50,
             child: Card(
-                elevation: (date.month == controller.period.month) ? 1 : 0,
+                elevation: elevation,
                 child: Center(
                   child: Text(date.day.toString()),
                 ))),
