@@ -33,6 +33,19 @@ class AppController with ChangeNotifier {
     await settingsService.updateThemeMode(newThemeMode);
   }
 
+  Brightness getCurrentBrightness(BuildContext context) {
+    switch (_themeMode) {
+      case ThemeMode.dark:
+        return Brightness.dark;
+      case ThemeMode.light:
+        return Brightness.light;
+      case ThemeMode.system:
+        return (MediaQuery.of(context).platformBrightness == Brightness.light)
+            ? Brightness.light
+            : Brightness.dark;
+    }
+  }
+
   // task controller
   final TaskRepository repository;
 
@@ -115,6 +128,30 @@ class AppController with ChangeNotifier {
     task.success(proof);
     update(task);
   }
+
+  List<Task> taskForThisYear(DateTime dateTime) =>
+      _tasks.where((element) => element.isAtThisYear(dateTime)).toList();
+
+  List<Task> taskForThisMonth(DateTime dateTime) =>
+      _tasks.where((element) => element.isAtThisMonth(dateTime)).toList();
+
+  List<Task> taskForThisDay(DateTime dateTime) =>
+      _tasks.where((element) => element.isAtThisDay(dateTime)).toList();
+
+  List<Task> taskForThisHour(DateTime dateTime) =>
+      _tasks.where((element) => element.isAtThisHour(dateTime)).toList();
+
+  bool isTaskForThisYear(DateTime dateTime) =>
+      taskForThisYear(dateTime).isNotEmpty;
+
+  bool isTaskForThisMonth(DateTime dateTime) =>
+      taskForThisMonth(dateTime).isNotEmpty;
+
+  bool isTaskForThisDay(DateTime dateTime) =>
+      taskForThisDay(dateTime).isNotEmpty;
+
+  bool isTaskForThisHour(DateTime dateTime) =>
+      taskForThisHour(dateTime).isNotEmpty;
 
   // calendar controller
   final CalendarController calendarController =

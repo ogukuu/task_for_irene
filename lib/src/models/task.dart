@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_for_irene/src/utilits/format_date.dart';
 import 'package:task_for_irene/src/utilits/uuid.dart';
 
 class Task {
@@ -13,13 +14,10 @@ class Task {
 
   bool get isActive => status == StatusTask.active;
   bool get isCompleted => !isActive;
-  bool isAtThisYear(DateTime dateTime) => dueDate.year == dateTime.year;
-  bool isAtThisMonth(DateTime dateTime) =>
-      isAtThisYear(dateTime) && (dueDate.month == dateTime.month);
-  bool isAtThisDay(DateTime dateTime) =>
-      isAtThisMonth(dateTime) && (dueDate.day == dateTime.day);
-  bool isAtThisHour(DateTime dateTime) =>
-      isAtThisDay(dateTime) && (dueDate.hour == dateTime.hour);
+  bool isAtThisYear(DateTime dateTime) => sameYear(dueDate, dateTime);
+  bool isAtThisMonth(DateTime dateTime) => sameMonth(dueDate, dateTime);
+  bool isAtThisDay(DateTime dateTime) => sameDay(dueDate, dateTime);
+  bool isAtThisHour(DateTime dateTime) => sameHour(dueDate, dateTime);
 
   Task(this.id, this.title, this.description, this.dueDate,
       this.reminderFrequency, this.status, this.photoProof);

@@ -8,4 +8,6 @@ class GlobalVar {
       settingsService: SettingsService(), repository: HiveTaskRepository());
 
   static final NavRoute navRoute = NavRoute();
+
+  static const double goldenRatio = 1.62;
 }
