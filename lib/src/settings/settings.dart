@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 
-class SettingsService {
-  static String settingsBoxName = "settingsBoxName";
-  static String themeModeSettingKey = "themeModeSettingKey";
-  late Box<String> settingsBox;
-
-  Future<void> init() async {
-    settingsBox = await Hive.openBox<String>(settingsBoxName);
+class Settings {
+  late ThemeMode themeMode;
+  late String themeModeName;
+  Settings() {
+    themeMode = ThemeMode.system;
+    themeModeName = MyThemeMode.getNameThemeMode(themeMode);
   }
 
-  Future<ThemeMode> themeMode() async {
-    return MyThemeMode.getThemeMode(
-        settingsBox.get(themeModeSettingKey) ?? MyThemeMode.system);
+  Settings.byName({this.themeModeName = MyThemeMode.system}) {
+    themeMode = MyThemeMode.getThemeMode(themeModeName);
   }
 
-  Future<void> updateThemeMode(ThemeMode theme) async {
-    settingsBox.put(themeModeSettingKey, MyThemeMode.getNameThemeMode(theme));
+  Settings byThemeMode(ThemeMode themeMode) {
+    return Settings.byName(
+        themeModeName: MyThemeMode.getNameThemeMode(themeMode));
   }
 }
 

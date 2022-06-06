@@ -8,7 +8,7 @@ import '../screens/add_task_view.dart';
 import '../screens/calendar_view.dart';
 import '../screens/completed_task_view.dart';
 import '../screens/tasks_view.dart';
-import '../settings/settings_view.dart';
+import '../screens/settings_view.dart';
 
 class NavRoute {
   static const addTask = "/add_task";

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 
@@ -31,7 +31,10 @@ class HiveTaskRepository extends TaskRepository {
 
   @override
   Future<void> init() async {
-    await Hive.initFlutter();
+    if (GlobalVar.hiveIsNotInit) {
+      GlobalVar.hiveIsNotInit = false;
+      await Hive.initFlutter();
+    }
     Hive.registerAdapter(TaskAdapter());
     box = await Hive.openBox<Task>(nameBox);
     super.init();
@@ -84,17 +87,4 @@ class TaskAdapter extends TypeAdapter<Task> {
     writer.writeString(obj.status);
     writer.write(obj.photoProof);
   }
-}
-
-class ImageAdapter extends TypeAdapter<Image> {
-  @override
-  Image read(Object reader) {
-    throw UnimplementedError();
-  }
-
-  @override
-  int get typeId => 1;
-
-  @override
-  void write(BinaryWriter writer, Image obj) {}
 }

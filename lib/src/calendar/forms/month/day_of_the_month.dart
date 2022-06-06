@@ -12,7 +12,8 @@ class DayOfTheMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool active = date.month == controller.period.month;
+    bool active = date.month == controller.period.month; // переделать
+
     double elevation = (active) ? 2 : 0;
     double maxWidth = MediaQuery.of(context).size.width;
     bool isWeekend = (date.weekday == DateTime.sunday) ||

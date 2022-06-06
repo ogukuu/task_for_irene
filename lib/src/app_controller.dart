@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/repository/settings_repository.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
+import 'package:task_for_irene/src/settings/settings.dart';
 
 import 'calendar/calendar_controller.dart';
 import 'calendar/utilits/current_period.dart';
 import 'models/task.dart';
-import 'settings/settings_service.dart';
 
 class AppController with ChangeNotifier {
-  AppController({required this.settingsService, required this.repository});
+  AppController({required this.settingsRepository, required this.repository});
 
   //setting controller
 
-  final SettingsService settingsService;
-  late ThemeMode _themeMode;
-  ThemeMode get themeMode => _themeMode;
+  final SettingsRepository settingsRepository;
+  late Settings _settings;
+  ThemeMode get themeMode => _settings.themeMode;
 
-  Future<void> loadSettings() async {
-    _themeMode = await settingsService.themeMode();
+  void loadSettings() {
+    _settings = settingsRepository.read();
 
     notifyListeners();
   }
@@ -24,17 +25,17 @@ class AppController with ChangeNotifier {
   Future<void> updateThemeMode(ThemeMode? newThemeMode) async {
     if (newThemeMode == null) return;
 
-    if (newThemeMode == _themeMode) return;
+    if (newThemeMode == themeMode) return;
 
-    _themeMode = newThemeMode;
+    _settings.themeMode = newThemeMode;
 
     notifyListeners();
 
-    await settingsService.updateThemeMode(newThemeMode);
+    await settingsRepository.write(_settings.byThemeMode(newThemeMode));
   }
 
   Brightness getCurrentBrightness(BuildContext context) {
-    switch (_themeMode) {
+    switch (_settings.themeMode) {
       case ThemeMode.dark:
         return Brightness.dark;
       case ThemeMode.light:

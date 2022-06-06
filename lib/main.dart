@@ -6,8 +6,8 @@ import 'src/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalVar.appController.repository.init();
-  await GlobalVar.appController.settingsService.init();
-  await GlobalVar.appController.loadSettings();
+  await GlobalVar.appController.settingsRepository.init();
+  GlobalVar.appController.loadSettings();
   GlobalVar.appController.loadTasks();
   runApp(const _InitApp());
 }
@@ -23,6 +23,7 @@ class _InitAppState extends State<_InitApp> {
   @override
   void dispose() {
     GlobalVar.appController.repository.close();
+    GlobalVar.appController.settingsRepository.close();
     super.dispose();
   }
 
