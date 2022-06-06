@@ -14,12 +14,15 @@ class Calendar extends StatelessWidget {
   Widget _getPeriodTypeWidget() {
     switch (controller.period.periodType) {
       case PeriodType.year:
-        return CalendarYearForm(controller: controller);
+        return CalendarYearForm(dates: controller.period.dates);
       case PeriodType.day:
         return CalendarDayForm(controller: controller);
       case PeriodType.month:
       default:
-        return CalendarMonthForm(controller: controller);
+        return CalendarMonthForm(
+          days: controller.period
+              .getExtendedMonthDates(controller.firstDayOfTheWeek),
+        );
     }
   }
 

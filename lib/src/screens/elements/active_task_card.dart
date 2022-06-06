@@ -18,8 +18,8 @@ class ActiveTaskCard extends StatelessWidget {
     final double indent = MediaQuery.of(context).size.width / 12;
     final double padding = indent / 4;
     return GestureDetector(
-      onTap: (() => Navigator.restorablePushNamed(
-          context, NavRoute.activeTask + task.id)),
+      onTap: () =>
+          Navigator.restorablePushNamed(context, NavRoute.activeTask + task.id),
       child: Column(children: [
         Divider(
           thickness: 1,

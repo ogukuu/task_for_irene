@@ -139,12 +139,3 @@ class CurrentPeriod {
 }
 
 enum PeriodType { year, month, day }
-
-enum FirstDayOfTheWeek {
-  sunday(DateTime.sunday),
-  monday(DateTime.monday);
-
-  // ignore: unused_field
-  final int _day;
-  const FirstDayOfTheWeek(this._day);
-}

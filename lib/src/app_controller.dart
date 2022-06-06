@@ -130,17 +130,21 @@ class AppController with ChangeNotifier {
     update(task);
   }
 
-  List<Task> taskForThisYear(DateTime dateTime) =>
-      _tasks.where((element) => element.isAtThisYear(dateTime)).toList();
+  List<Task> taskForThisYear(DateTime dateTime) => _tasks
+      .where((element) => element.isAtThisYear(dateTime) && element.isActive)
+      .toList();
 
-  List<Task> taskForThisMonth(DateTime dateTime) =>
-      _tasks.where((element) => element.isAtThisMonth(dateTime)).toList();
+  List<Task> taskForThisMonth(DateTime dateTime) => _tasks
+      .where((element) => element.isAtThisMonth(dateTime) && element.isActive)
+      .toList();
 
-  List<Task> taskForThisDay(DateTime dateTime) =>
-      _tasks.where((element) => element.isAtThisDay(dateTime)).toList();
+  List<Task> taskForThisDay(DateTime dateTime) => _tasks
+      .where((element) => element.isAtThisDay(dateTime) && element.isActive)
+      .toList();
 
-  List<Task> taskForThisHour(DateTime dateTime) =>
-      _tasks.where((element) => element.isAtThisHour(dateTime)).toList();
+  List<Task> taskForThisHour(DateTime dateTime) => _tasks
+      .where((element) => element.isAtThisHour(dateTime) && element.isActive)
+      .toList();
 
   bool isTaskForThisYear(DateTime dateTime) =>
       taskForThisYear(dateTime).isNotEmpty;
@@ -155,6 +159,11 @@ class AppController with ChangeNotifier {
       taskForThisHour(dateTime).isNotEmpty;
 
   // calendar controller
+
+  int get firstDayOfTheWeek => calendarController.firstDayOfTheWeek;
+  set firstDayOfTheWeek(int day) =>
+      calendarController.updateFirstDayOfTheWeek(day);
+
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));
 }

@@ -134,3 +134,25 @@ class CalendarUtilitsByContext {
     }
   }
 }
+
+Color? getColor(
+    {bool isNow = false,
+    bool isWeekend = false,
+    Brightness brightness = Brightness.light}) {
+  if (isNow) return Colors.green.shade500;
+  if (isWeekend) {
+    return (brightness == Brightness.light)
+        ? Colors.blue.shade100
+        : Colors.grey.shade700;
+  }
+  return null;
+}
+
+ShapeBorder? getShape({bool isTask = false}) {
+  if (isTask) {
+    return ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.blue, width: 3));
+  }
+  return null;
+}

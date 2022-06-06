@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/calendar/forms/year/month_of_the_year.dart';
 
 class CalendarYearForm extends StatelessWidget {
-  const CalendarYearForm({Key? key, required this.controller})
-      : super(key: key);
-  final CalendarController controller;
+  const CalendarYearForm({Key? key, required this.dates}) : super(key: key);
+
+  final List<DateTime> dates;
 
   Widget _body() {
     return Table(
@@ -17,9 +16,9 @@ class CalendarYearForm extends StatelessWidget {
     List<TableRow> tableRowList = [];
     for (var i = 0; i < 4; i++) {
       tableRowList.add(TableRow(
-          children: controller.period.dates
+          children: dates
               .getRange(i * 3, i * 3 + 3)
-              .map((e) => MonthOfTheYear(date: e, controller: controller))
+              .map((e) => MonthOfTheYear(date: e))
               .toList()));
     }
     return tableRowList;

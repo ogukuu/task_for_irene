@@ -24,4 +24,12 @@ class CalendarController extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void next() => updatePeriodType(period.next());
+
+  void prev() => updatePeriodType(period.prev());
+
+  void up() => updatePeriodType(period.up());
+
+  void down(DateTime pick) => updatePeriodType(period.down(pick));
 }

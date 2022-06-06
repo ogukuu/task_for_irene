@@ -26,7 +26,7 @@ class SubPeriod extends StatelessWidget {
       onTap: fyncOnTap,
       child: SizedBox(
         width: width,
-        height: height,
+        height: (width == double.infinity) ? null : height,
         child: child,
       ),
     );
