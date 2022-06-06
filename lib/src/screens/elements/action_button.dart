@@ -44,14 +44,18 @@ class ActionButton extends StatelessWidget {
           switch (item) {
             case Actions.delete:
               GlobalVar.appController.deleteTaskAtId(id);
+              if (!onEdit) Navigator.pop(context);
               break;
             case Actions.proofGallery:
+              if (!onEdit) Navigator.pop(context);
               _addProofGallery(id);
               break;
             case Actions.surrender:
               GlobalVar.appController.surrenderTaskAtId(id);
+              if (!onEdit) Navigator.pop(context);
               break;
             case Actions.proofCamera:
+              if (!onEdit) Navigator.pop(context);
               _addProofCamera(id);
               break;
             case Actions.edit:

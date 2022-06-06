@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/models/task.dart';
+import 'package:task_for_irene/src/screens/elements/action_button.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 import '../utilits/fix.dart';
@@ -19,6 +20,7 @@ class ActiveTaskView extends StatefulWidget {
 
 class _ActiveTaskViewState extends State<ActiveTaskView> {
   late String title;
+  late String id;
 
   String get description => widget.localTask.description;
   set description(String string) => widget.localTask.description = string;
@@ -77,6 +79,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
     description = widget.localTask.description;
     dueDate = widget.localTask.dueDate;
     reminderFrequency = widget.localTask.reminderFrequency;
+    id = widget.localTask.id;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -91,9 +94,7 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Title(
-              title: title,
-            ),
+            _Title(title: title, id: id),
             const Divider(),
             _DescriptionField(
               description: description,
@@ -160,16 +161,31 @@ class _ActiveTaskViewState extends State<ActiveTaskView> {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({Key? key, required this.title}) : super(key: key);
+  const _Title({Key? key, required this.title, required this.id})
+      : super(key: key);
   final String title;
+  final String id;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(title,
-          overflow: TextOverflow.ellipsis,
-          textScaleFactor: 1.3,
-          textAlign: TextAlign.center),
+    return Row(
+      children: [
+        Flexible(
+          child: SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(title,
+                  overflow: TextOverflow.ellipsis,
+                  textScaleFactor: 1.3,
+                  textAlign: TextAlign.start),
+            ),
+          ),
+        ),
+        ActionButton(
+          id: id,
+          onEdit: false,
+        )
+      ],
     );
   }
 }
