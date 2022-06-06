@@ -40,7 +40,7 @@ class NavRoute {
       case addTask:
         return const AddTaskView();
       case settings:
-        return const SettingsView();
+        return SettingsView(settings: GlobalVar.appController.settings);
       case tasks:
         return TasksView(tasks: GlobalVar.appController.tasks);
       case error:

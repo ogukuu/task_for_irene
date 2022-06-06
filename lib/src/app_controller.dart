@@ -14,6 +14,7 @@ class AppController with ChangeNotifier {
 
   final SettingsRepository settingsRepository;
   late Settings _settings;
+  Settings get settings => _settings;
   ThemeMode get themeMode => _settings.themeMode;
 
   void loadSettings() {
@@ -29,9 +30,9 @@ class AppController with ChangeNotifier {
 
     _settings.themeMode = newThemeMode;
 
-    notifyListeners();
-
     await settingsRepository.write(_settings.byThemeMode(newThemeMode));
+
+    notifyListeners();
   }
 
   Brightness getCurrentBrightness(BuildContext context) {

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/navigation/nav_route.dart';
+import 'package:task_for_irene/src/settings/settings.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({Key? key, required this.settings}) : super(key: key);
+
+  final Settings settings;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class SettingsView extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.settingsViewTitle),
       ),
       body: Column(children: [
-        const _ThemeModeSetting(),
+        _ThemeModeSetting(themeMode: settings.themeMode),
         Divider(
           thickness: 1,
           indent: indent,
@@ -36,14 +39,17 @@ class SettingsView extends StatelessWidget {
 }
 
 class _ThemeModeSetting extends StatelessWidget {
-  const _ThemeModeSetting({Key? key}) : super(key: key);
+  const _ThemeModeSetting({Key? key, required this.themeMode})
+      : super(key: key);
+
+  final ThemeMode themeMode;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: DropdownButton<ThemeMode>(
-        value: GlobalVar.appController.themeMode,
+        value: themeMode,
         onChanged: GlobalVar.appController.updateThemeMode,
         items: [
           DropdownMenuItem(
