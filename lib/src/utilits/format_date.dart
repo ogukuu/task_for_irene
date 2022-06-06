@@ -44,3 +44,44 @@ bool currentYear(DateTime dateTime) => sameYear(dateTime, DateTime.now());
 bool currentMonth(DateTime dateTime) => sameMonth(dateTime, DateTime.now());
 bool currentDay(DateTime dateTime) => sameDay(dateTime, DateTime.now());
 bool currentHour(DateTime dateTime) => sameHour(dateTime, DateTime.now());
+
+String toURL(DateTime dateTime) {
+  int D = dateTime.day;
+  int M = dateTime.month;
+  int Y = dateTime.year;
+  // ignore: non_constant_identifier_names
+  String DD = (D < 10) ? "0$D" : "$D";
+  // ignore: non_constant_identifier_names
+  String MM = (M < 10) ? "0$M" : "$M";
+  // ignore: non_constant_identifier_names
+  String YYYY = (Y < 10)
+      ? "000$Y"
+      : (Y < 100)
+          ? "00$Y"
+          : (Y < 1000)
+              ? "0$Y"
+              : "$Y";
+  int h = dateTime.hour;
+  int m = dateTime.minute;
+  String hh = (h < 10) ? "0$h" : "$h";
+  String mm = (m < 10) ? "0$m" : "$m";
+  return "Y=$YYYY,M=$MM,D=$DD,h=$hh,m=$mm";
+}
+
+DateTime toDatetime(String url) {
+  DateTime error = DateTime(0);
+  if (!url.startsWith("Y=") ||
+      !url.startsWith(",M=", 6) ||
+      !url.startsWith(",D=", 11) ||
+      !url.startsWith(",h=", 16) ||
+      !url.startsWith(",m=", 21)) return error;
+  // ignore: non_constant_identifier_names
+  int YYYY = int.parse(url.substring(2, 6));
+  // ignore: non_constant_identifier_names
+  int MM = int.parse(url.substring(9, 11));
+  // ignore: non_constant_identifier_names
+  int DD = int.parse(url.substring(14, 16));
+  int hh = int.parse(url.substring(19, 21));
+  int mm = int.parse(url.substring(24, 26));
+  return DateTime(YYYY, MM, DD, hh, mm);
+}
