@@ -1,13 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:task_for_irene/src/global_var.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/task.dart';
 import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
+import 'action_button.dart';
 
 class ActiveTaskCard extends StatelessWidget {
   const ActiveTaskCard({Key? key, required this.task}) : super(key: key);
@@ -75,7 +70,7 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
-        _ActionButton(id: id)
+        ActionButton(id: id)
       ],
     );
   }
@@ -106,168 +101,5 @@ class _DueDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(width: double.infinity, child: Text(getDDMMYYYY(dueDate)));
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({Key? key, required this.id}) : super(key: key);
-  final String id;
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<Actions>(
-        //icon: const Icon(Icons.arrow_drop_down),
-        tooltip: "Action",
-        elevation: 2,
-        // Callback that sets the selected popup menu item.
-        onSelected: (Actions item) {
-          switch (item) {
-            case Actions.delete:
-              GlobalVar.appController.deleteTaskAtId(id);
-              break;
-            case Actions.proofGallery:
-              _addProofGallery(id);
-              break;
-            case Actions.surrender:
-              GlobalVar.appController.surrenderTaskAtId(id);
-              break;
-            case Actions.proofCamera:
-              _addProofCamera(id);
-              break;
-            case Actions.edit:
-              Navigator.restorablePushNamed(context, NavRoute.activeTask + id);
-              break;
-          }
-        },
-        itemBuilder: (BuildContext context) => const <PopupMenuEntry<Actions>>[
-              PopupMenuItem<Actions>(
-                value: Actions.proofGallery,
-                child: _ActionProofGallery(),
-              ),
-              PopupMenuItem<Actions>(
-                value: Actions.proofCamera,
-                child: _ActionProofCamera(),
-              ),
-              PopupMenuItem<Actions>(
-                value: Actions.edit,
-                child: _ActionEdit(),
-              ),
-              PopupMenuItem<Actions>(
-                value: Actions.surrender,
-                child: _ActionSurrender(),
-              ),
-              PopupMenuItem<Actions>(
-                value: Actions.delete,
-                child: _ActionDelete(),
-              )
-            ]);
-  }
-}
-
-class _ActionProofCamera extends StatelessWidget {
-  const _ActionProofCamera({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.add_a_photo_outlined),
-        const VerticalDivider(),
-        Text(AppLocalizations.of(context)!
-            .activeTaskCardActionProvideProofCamera),
-      ],
-    );
-  }
-}
-
-class _ActionProofGallery extends StatelessWidget {
-  const _ActionProofGallery({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.photo_library_outlined),
-        const VerticalDivider(),
-        Text(AppLocalizations.of(context)!
-            .activeTaskCardActionProvideProofGallery),
-      ],
-    );
-  }
-}
-
-class _ActionDelete extends StatelessWidget {
-  const _ActionDelete({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.delete_forever_outlined),
-        const VerticalDivider(),
-        Text(AppLocalizations.of(context)!.activeTaskCardActionDelete),
-      ],
-    );
-  }
-}
-
-class _ActionSurrender extends StatelessWidget {
-  const _ActionSurrender({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.sentiment_dissatisfied),
-        const VerticalDivider(),
-        Text(AppLocalizations.of(context)!.activeTaskCardActionSurrender),
-      ],
-    );
-  }
-}
-
-class _ActionEdit extends StatelessWidget {
-  const _ActionEdit({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Icon(Icons.edit_outlined),
-        const VerticalDivider(),
-        Text(AppLocalizations.of(context)!.activeTaskCardActionEdit),
-      ],
-    );
-  }
-}
-
-enum Actions { delete, surrender, proofGallery, proofCamera, edit }
-
-void _addProofGallery(String id) async {
-  if (!Platform.isAndroid) return null;
-  final ImagePicker picker = ImagePicker();
-  XFile? pickImage = await picker.pickImage(source: ImageSource.gallery);
-  if (pickImage != null) {
-    Uint8List image = await pickImage.readAsBytes();
-    GlobalVar.appController.proofTask(id, image);
-  }
-}
-
-void _addProofCamera(String id) async {
-  if (!Platform.isAndroid) return null;
-  final ImagePicker picker = ImagePicker();
-  XFile? pickImage = await picker.pickImage(source: ImageSource.camera);
-  if (pickImage != null) {
-    Uint8List image = await pickImage.readAsBytes();
-    GlobalVar.appController.proofTask(id, image);
   }
 }
