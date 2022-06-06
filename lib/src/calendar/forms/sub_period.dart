@@ -7,12 +7,14 @@ class SubPeriod extends StatelessWidget {
       required this.child,
       this.onActive = true,
       this.onTap,
+      this.onLongPress,
       this.width = double.infinity})
       : super(key: key);
 
   final Widget child;
   final bool onActive;
   final Function()? onTap;
+  final Function()? onLongPress;
   final double width;
 
   @override
@@ -21,8 +23,13 @@ class SubPeriod extends StatelessWidget {
       if (onActive && !(onTap == null)) onTap!();
     }
 
+    fyncOnLongPress() {
+      if (onActive && !(onLongPress == null)) onLongPress!();
+    }
+
     double height = width / GlobalVar.goldenRatio;
     return GestureDetector(
+      onLongPress: fyncOnLongPress,
       onTap: fyncOnTap,
       child: SizedBox(
         width: width,

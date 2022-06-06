@@ -3,6 +3,7 @@ import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/screens/active_task_view.dart';
 import 'package:task_for_irene/src/screens/error_view.dart';
+import 'package:task_for_irene/src/utilits/format_date.dart';
 
 import '../screens/add_task_view.dart';
 import '../screens/calendar_view.dart';
@@ -12,6 +13,7 @@ import '../screens/settings_view.dart';
 
 class NavRoute {
   static const addTask = "/add_task";
+  static const addTaskWithDate = "/add_task?DT:";
   static const settings = "/settings";
   static const calendar = "/calendar";
   static const tasks = "/tasks";
@@ -22,6 +24,9 @@ class NavRoute {
   Widget route(String? route) {
     if (route == null) {
       return const ErrorView();
+    }
+    if (route.startsWith(addTaskWithDate)) {
+      return AddTaskView(startDate: toDatetime(route.substring(13)));
     }
     if (route.startsWith(activeTask)) {
       String id = route.replaceFirst(activeTask, "");

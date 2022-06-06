@@ -7,7 +7,9 @@ import 'package:task_for_irene/src/utilits/format_date.dart';
 import '../utilits/fix.dart';
 
 class AddTaskView extends StatefulWidget {
-  const AddTaskView({Key? key}) : super(key: key);
+  const AddTaskView({Key? key, this.startDate}) : super(key: key);
+
+  final DateTime? startDate;
 
   @override
   State<AddTaskView> createState() => _AddTaskViewState();
@@ -55,6 +57,12 @@ class _AddTaskViewState extends State<AddTaskView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.startDate != null) {
+      dueDate = widget.startDate;
+      if (dueDate!.hour != 0 || dueDate!.minute != 0) {
+        dueTime = TimeOfDay(hour: dueDate!.hour, minute: dueDate!.minute);
+      }
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

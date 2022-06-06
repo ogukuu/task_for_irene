@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/forms/sub_period.dart';
 import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 import 'package:task_for_irene/src/global_var.dart';
+import 'package:task_for_irene/src/navigation/nav_route.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 class MonthOfTheYear extends StatelessWidget {
@@ -16,6 +17,10 @@ class MonthOfTheYear extends StatelessWidget {
     double elevation = (active) ? 2 : 0;
     bool isTask = GlobalVar.appController.isTaskForThisMonth(date);
     return SubPeriod(
+        onLongPress: () {
+          Navigator.restorablePushNamed(
+              context, NavRoute.addTaskWithDate + toURL(date));
+        },
         onActive: active,
         width: maxWidth / 3,
         onTap: () => GlobalVar.appController.calendarController.down(date),

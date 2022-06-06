@@ -49,6 +49,10 @@ class HourOfTheDay extends StatelessWidget {
     double elevation = (active) ? 2 : 0;
     bool isTask = GlobalVar.appController.isTaskForThisHour(date);
     return SubPeriod(
+        onLongPress: () {
+          Navigator.restorablePushNamed(
+              context, NavRoute.addTaskWithDate + toURL(date));
+        },
         onActive: active,
         onTap: () {},
         child: Card(
