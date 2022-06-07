@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/push/notifications_controller.dart';
+import 'package:task_for_irene/src/push/notification_api.dart';
 import 'package:task_for_irene/src/repository/settings_repository.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 import 'package:task_for_irene/src/settings/settings.dart';
@@ -71,9 +73,11 @@ class AppController with ChangeNotifier {
 
   void addTask(Task? task) {
     if (task == null) return;
+    if (task.isCompleted) return;
     if (_tasks.contains(task)) return;
     _tasks.add(task);
     repository.add(task);
+    notificationsController.addTask(task);
     notifyListeners();
   }
 
@@ -84,12 +88,14 @@ class AppController with ChangeNotifier {
   void clear() {
     repository.clear();
     _tasks.clear();
+    notificationsController.initState(activeTasks: []);
     notifyListeners();
   }
 
   void deleteTask(Task task) {
     _tasks.remove(task);
     repository.delete(task);
+    notificationsController.completeTask(task.id);
     notifyListeners();
   }
 
@@ -103,6 +109,7 @@ class AppController with ChangeNotifier {
   void surrenderTask(Task task) {
     task.surrender();
     repository.update(task);
+    notificationsController.completeTask(task.id);
     notifyListeners();
   }
 
@@ -117,6 +124,7 @@ class AppController with ChangeNotifier {
     _tasks.removeWhere((element) => element.id == task.id);
     _tasks.add(task);
     repository.update(task);
+    notificationsController.updateTask(task);
     notifyListeners();
   }
 
@@ -167,4 +175,15 @@ class AppController with ChangeNotifier {
 
   final CalendarController calendarController =
       CalendarController(CurrentPeriod.now(PeriodType.month));
+
+  // NotificationsController
+
+  final NotificationsController notificationsController =
+      NotificationsController();
+  NotificationApi get push => notificationsController.notificationApi;
+
+  void initNotifications() {
+    notificationsController.init();
+    notificationsController.initState(activeTasks: activeTasks);
+  }
 }

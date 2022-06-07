@@ -3,8 +3,6 @@ import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 import 'package:task_for_irene/src/task/task.dart';
 
-import '../../task/task_utilits.dart';
-
 class HiveTaskRepository extends TaskRepository {
   String nameBox = "HiveTaskRepository";
   late Box<Task> box;
@@ -38,12 +36,6 @@ class HiveTaskRepository extends TaskRepository {
     Hive.registerAdapter(TaskAdapter());
     box = await Hive.openBox<Task>(nameBox);
     super.init();
-
-    //Test
-    await box.clear();
-    for (var e in testTasks) {
-      await add(e);
-    }
   }
 
   @override

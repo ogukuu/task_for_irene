@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:task_for_irene/src/push/notificationservice.dart';
+import 'package:task_for_irene/src/global_var.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({Key? key}) : super(key: key);
@@ -12,27 +12,31 @@ class ErrorView extends StatelessWidget {
         elevation: 2,
         title: Text(AppLocalizations.of(context)!.errorViewTitle),
       ),
-      body: Center(
-          child: ElevatedButton(
-              onPressed: _onPressed,
-              child: Text(AppLocalizations.of(context)!.errorViewMessage))),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          ElevatedButton(onPressed: _onPressed, child: Text("send Push")),
+          Divider(),
+          ElevatedButton(onPressed: _stop, child: Text("delete all Push"))
+        ],
+      ),
     );
   }
 }
 
 void _onPressed() {
-  showScheduledNotification(
-      id: 1,
-      title: "title",
-      body: "body",
-      payload: "pl",
-      scheduledDate: DateTime.now(),
-      secondDelay: 10);
-  showScheduledNotification(
-      id: 2,
-      title: "title",
-      body: "body",
-      payload: "pl",
-      scheduledDate: DateTime.now(),
-      secondDelay: 15);
+  var push = GlobalVar.appController.push;
+  var dateTime = DateTime.now();
+  for (int i = 1; i < 10; i++) {
+    push.showScheduledNotification(
+        scheduledDate: dateTime,
+        id: i,
+        title: "showScheduledNotification: $i",
+        body: "showScheduledNotification $i",
+        secondDelay: 10);
+  }
+}
+
+void _stop() {
+  GlobalVar.appController.push.stopAllNotification();
 }

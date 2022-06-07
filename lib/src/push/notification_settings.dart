@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class NotificationSettings {
   NotificationSettings();
-  TimeOfDay alertTime = const TimeOfDay(hour: 19, minute: 00);
-  bool dispersion = false;
+  TimeOfDay notificationTime = const TimeOfDay(hour: 20, minute: 00);
 
-  ///dispersion value in seconds
-  int dispersionValue = 15;
+  @override
+  bool operator ==(Object other) =>
+      other is NotificationSettings &&
+      other.notificationTime == notificationTime;
+
+  @override
+  int get hashCode => notificationTime.hashCode;
 }
