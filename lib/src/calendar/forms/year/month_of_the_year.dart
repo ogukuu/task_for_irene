@@ -36,22 +36,5 @@ class MonthOfTheYear extends StatelessWidget {
               CalendarUtilitsByContext.of(context).getNameMonth(date.month),
               overflow: TextOverflow.ellipsis,
             ))));
-
-    // return GestureDetector(
-    //   onTap: () => controller.updatePeriodType(controller.period.down(date)),
-    //   child: Padding(
-    //     padding: const EdgeInsets.all(0.0),
-    //     child: SizedBox(
-    //         width: 50,
-    //         height: 50,
-    //         child: Card(
-    //             child: Center(
-    //           child: Text(
-    //             CalendarUtilitsByContext.of(context).getNameMonth(date.month),
-    //             overflow: TextOverflow.ellipsis,
-    //           ),
-    //         ))),
-    //   ),
-    // );
   }
 }

@@ -67,5 +67,6 @@
   "activeTaskCardActionSurrender": "Surrender",
   "activeTaskCardActionProvideProofGallery": "Complete. Gallery..",
   "activeTaskCardActionProvideProofCamera": "Complete. Camera..",
-  "activeTaskCardActionEdit": "Edit.."
+  "activeTaskCardActionEdit": "Edit..",
+  "actionButtonTooltip": "Actions"
 }

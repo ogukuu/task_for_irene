@@ -35,7 +35,7 @@ class CompletedTaskCard extends StatelessWidget {
                   Expanded(
                       child: _TaskInfo(
                           title: task.title,
-                          description: testDescription(task))) // TEST
+                          description: task.description)) // TEST
                 ]),
           ),
           Divider(

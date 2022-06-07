@@ -38,7 +38,7 @@ class ActionButton extends StatelessWidget {
     ));
 
     return PopupMenuButton<Actions>(
-        tooltip: "Action",
+        tooltip: AppLocalizations.of(context)!.actionButtonTooltip,
         elevation: 2,
         onSelected: (Actions item) {
           switch (item) {

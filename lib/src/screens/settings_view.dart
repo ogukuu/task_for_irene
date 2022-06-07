@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/navigation/nav_route.dart';
 import 'package:task_for_irene/src/settings/settings.dart';
 
 class SettingsView extends StatelessWidget {
@@ -25,14 +24,6 @@ class SettingsView extends StatelessWidget {
           endIndent: indent,
           height: 100,
         ),
-        const _DangerButton(),
-        Divider(
-          thickness: 1,
-          indent: indent,
-          endIndent: indent,
-          height: 100,
-        ),
-        const _TestErrorButton()
       ]),
     );
   }
@@ -67,49 +58,5 @@ class _ThemeModeSetting extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _DangerButton extends StatelessWidget {
-  const _DangerButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.amber.shade900)),
-        onPressed: (() {
-          GlobalVar.appController.clear();
-        }),
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            "DELETE ALL TASKS",
-            overflow: TextOverflow.ellipsis,
-            textScaleFactor: 2,
-          ),
-        ));
-  }
-}
-
-class _TestErrorButton extends StatelessWidget {
-  const _TestErrorButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.amber.shade900)),
-        onPressed: (() {
-          Navigator.restorablePushNamed(context, NavRoute.error);
-        }),
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Test Error View",
-            overflow: TextOverflow.ellipsis,
-            textScaleFactor: 2,
-          ),
-        ));
   }
 }
