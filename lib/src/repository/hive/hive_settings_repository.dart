@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/repository/settings_repository.dart';
 import 'package:task_for_irene/src/settings/settings.dart';
 
 class HiveSettingsRepository extends SettingsRepository {
-  static String settingsBoxName = "settingsBoxName";
+  static String settingsBoxName = "settingsBox";
   static String key = "Settings";
   late Box<Settings> box;
 
@@ -47,7 +48,11 @@ class SettingsAdapter extends TypeAdapter<Settings> {
   @override
   Settings read(BinaryReader reader) {
     var themeModeName = reader.readString();
-    return Settings.byThemeModeName(themeModeName: themeModeName);
+    var h = reader.readInt();
+    var m = reader.readInt();
+    return Settings.byThemeModeName(
+        themeModeName: themeModeName,
+        notificationTriggerTime: TimeOfDay(hour: h, minute: m));
   }
 
   @override
@@ -56,5 +61,7 @@ class SettingsAdapter extends TypeAdapter<Settings> {
   @override
   void write(BinaryWriter writer, Settings obj) {
     writer.writeString(obj.themeModeName);
+    writer.writeInt(obj.notificationTriggerTime.hour);
+    writer.writeInt(obj.notificationTriggerTime.minute);
   }
 }

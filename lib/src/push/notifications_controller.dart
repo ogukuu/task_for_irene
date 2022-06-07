@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/push/notification_settings.dart';
 import 'package:task_for_irene/src/push/notification_api.dart';
 import 'package:task_for_irene/src/push/notifications_utilits.dart';
 import 'package:task_for_irene/src/task/task.dart';
@@ -9,16 +8,16 @@ import 'package:task_for_irene/src/task/task.dart';
 class NotificationsController {
   // _______SETTINGS_______
 
-  late NotificationSettings _settings;
+  late TimeOfDay _notificationTriggerTime;
 
-  NotificationsController({NotificationSettings? settings}) {
-    _settings = settings ?? NotificationSettings();
+  NotificationsController({required TimeOfDay notificationTriggerTime}) {
+    _notificationTriggerTime = notificationTriggerTime;
   }
 
-  void updateSettings(NotificationSettings? settings) {
-    if (settings == null) return;
-    if (_settings == settings) return;
-    _settings = settings;
+  void updateSettings(TimeOfDay? newNotificationTriggerTime) {
+    if (newNotificationTriggerTime == null) return;
+    if (_notificationTriggerTime == newNotificationTriggerTime) return;
+    _notificationTriggerTime = newNotificationTriggerTime;
     _rebuildingAllNotifications();
   }
 
@@ -72,7 +71,7 @@ class NotificationsController {
   /// add list of notification to database of notification
   Future<void> _addNotifications({required Task task}) async {
     if (task.isCompleted) return;
-    _notifications[task.id] = Notification(task, _settings);
+    _notifications[task.id] = Notification(task, _notificationTriggerTime);
     _ids[task.id] =
         List.generate(_notifications[task.id]!.dates.length, (index) {
       counter += 1;
@@ -136,10 +135,10 @@ class Notification {
   late final String title;
   late final String body;
   final List<DateTime> dates = [];
-  Notification(Task task, NotificationSettings settings) {
+  Notification(Task task, TimeOfDay notificationTriggerTime) {
     title = getTitleNotification(task);
     body = getBodyNotification(task);
-    TimeOfDay time = settings.notificationTime;
+    TimeOfDay time = notificationTriggerTime;
     DateTime dueDate = task.dueDate;
     DateTime day = DateTime(
             dueDate.year, dueDate.month, dueDate.day, time.hour, time.minute)

@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/settings/settings.dart';
+import 'package:task_for_irene/src/utilits/fix.dart';
+import 'package:task_for_irene/src/utilits/format_date.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({Key? key, required this.settings}) : super(key: key);
 
   final Settings settings;
+
+  void selectTime(BuildContext context) async {
+    final TimeOfDay? selected = await showTimePicker(
+        context: context, initialTime: settings.notificationTriggerTime);
+    GlobalVar.appController.updateNotificationTriggerTime(selected);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +24,34 @@ class SettingsView extends StatelessWidget {
         elevation: 2,
         title: Text(AppLocalizations.of(context)!.settingsViewTitle),
       ),
-      body: Column(children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _ThemeModeSetting(themeMode: settings.themeMode),
         Divider(
           thickness: 1,
           indent: indent,
           endIndent: indent,
-          height: 100,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "${AppLocalizations.of(context)!.settingsViewNotificationTitle}${getHHMMTimeOfDay(settings.notificationTriggerTime)}",
+            textScaleFactor: 1.2,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(1),
+                  backgroundColor: elevatedButtonBackgroundFix(context)),
+              onPressed: () {
+                selectTime(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(AppLocalizations.of(context)!
+                    .settingsViewNotificationButton),
+              )),
         ),
       ]),
     );

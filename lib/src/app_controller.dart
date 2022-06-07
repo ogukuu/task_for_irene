@@ -37,6 +37,21 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateNotificationTriggerTime(
+      TimeOfDay? newNotificationTriggerTime) async {
+    if (newNotificationTriggerTime == null) return;
+
+    if (newNotificationTriggerTime == _settings.notificationTriggerTime) return;
+
+    _settings.notificationTriggerTime = newNotificationTriggerTime;
+
+    await settingsRepository.write(_settings);
+
+    notificationsController.updateSettings(newNotificationTriggerTime);
+
+    notifyListeners();
+  }
+
   Brightness getCurrentBrightness(BuildContext context) {
     switch (_settings.themeMode) {
       case ThemeMode.dark:
@@ -87,6 +102,7 @@ class AppController with ChangeNotifier {
 
   void clear() {
     repository.clear();
+    settingsRepository.clear();
     _tasks.clear();
     notificationsController.initState(activeTasks: []);
     notifyListeners();
@@ -178,11 +194,12 @@ class AppController with ChangeNotifier {
 
   // NotificationsController
 
-  final NotificationsController notificationsController =
-      NotificationsController();
+  late NotificationsController notificationsController;
   NotificationApi get push => notificationsController.notificationApi;
 
   void initNotifications() {
+    notificationsController = NotificationsController(
+        notificationTriggerTime: _settings.notificationTriggerTime);
     notificationsController.init();
     notificationsController.initState(activeTasks: activeTasks);
   }

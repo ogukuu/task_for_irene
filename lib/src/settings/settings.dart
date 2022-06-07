@@ -15,13 +15,23 @@ class Settings {
     _themeMode = MyThemeMode.getThemeMode(tmn);
   }
 
-  Settings({ThemeMode themeMode = ThemeMode.system}) {
+  Settings(
+      {ThemeMode themeMode = ThemeMode.system,
+      this.notificationTriggerTime = defaultNotificationTriggerTime}) {
     this.themeMode = ThemeMode.system;
   }
 
-  Settings.byThemeModeName({String themeModeName = MyThemeMode.system}) {
+  Settings.byThemeModeName(
+      {String themeModeName = MyThemeMode.system,
+      this.notificationTriggerTime = defaultNotificationTriggerTime}) {
     this.themeModeName = themeModeName;
   }
+
+  // Notification settings
+  TimeOfDay notificationTriggerTime;
+
+  static const TimeOfDay defaultNotificationTriggerTime =
+      TimeOfDay(hour: 20, minute: 0);
 }
 
 class MyThemeMode {

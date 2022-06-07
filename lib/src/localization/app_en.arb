@@ -7,6 +7,8 @@
   "settingsViewSystemTheme": "System Theme",
   "settingsViewLightTheme": "Light Theme",
   "settingsViewDarkTheme": "Dark Theme",
+  "settingsViewNotificationTitle": "Notification trigger time: ",
+  "settingsViewNotificationButton": "Change time..",
   "myFloatingActionButtonTooltip": "Add task",
   "calendarViewTitle": "Calendar",
   "calendarViewToTasksButton": "Tasks",
