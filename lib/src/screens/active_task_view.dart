@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/screens/elements/action_button.dart';
+import 'package:task_for_irene/src/task/task.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 import '../utilits/fix.dart';

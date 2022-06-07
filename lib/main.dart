@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/global_var.dart';
+import 'package:task_for_irene/src/push/notificationservice.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'src/app.dart';
 
@@ -9,6 +11,10 @@ void main() async {
   await GlobalVar.appController.settingsRepository.init();
   GlobalVar.appController.loadSettings();
   GlobalVar.appController.loadTasks();
+
+  //push
+  //NotificationService().initNotification;
+
   runApp(const _InitApp());
 }
 
@@ -20,6 +26,14 @@ class _InitApp extends StatefulWidget {
 }
 
 class _InitAppState extends State<_InitApp> {
+  @override
+  void initState() {
+    super.initState();
+    //push
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    tz.initializeTimeZones();
+  }
+
   @override
   void dispose() {
     GlobalVar.appController.repository.close();

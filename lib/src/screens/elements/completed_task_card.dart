@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/navigation/nav_route.dart';
-
-import '../../models/task.dart';
-import '../../utilits/task_utilits.dart';
+import 'package:task_for_irene/src/task/task.dart';
+import '../../task/task_utilits.dart';
 
 class CompletedTaskCard extends StatelessWidget {
   const CompletedTaskCard({Key? key, required this.task}) : super(key: key);

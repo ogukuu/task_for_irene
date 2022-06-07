@@ -1,9 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
+import 'package:task_for_irene/src/task/task.dart';
 
-import '../../utilits/task_utilits.dart';
+import '../../task/task_utilits.dart';
 
 class HiveTaskRepository extends TaskRepository {
   String nameBox = "HiveTaskRepository";

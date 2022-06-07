@@ -16,13 +16,16 @@ class MonthOfTheYear extends StatelessWidget {
     bool active = (DateTime.now().isBefore(date) || isNow);
     double elevation = (active) ? 2 : 0;
     bool isTask = GlobalVar.appController.isTaskForThisMonth(date);
+    double width = maxWidth / 3;
+    double height = width / GlobalVar.goldenRatio;
     return SubPeriod(
         onLongPress: () {
           Navigator.restorablePushNamed(
               context, NavRoute.addTaskWithDate + toURL(date));
         },
         onActive: active,
-        width: maxWidth / 3,
+        width: width,
+        height: height,
         onTap: () => GlobalVar.appController.calendarController.down(date),
         child: Card(
             color: getColor(isNow: isNow),

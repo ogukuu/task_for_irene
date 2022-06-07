@@ -4,8 +4,7 @@ import 'package:task_for_irene/src/calendar/calendar.dart';
 import 'package:task_for_irene/src/calendar/calendar_controller.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/navigation/nav_route.dart';
-
-import '../models/task.dart';
+import 'package:task_for_irene/src/task/task.dart';
 import 'elements/active_task_card.dart';
 import 'elements/my_floating_action_button.dart';
 

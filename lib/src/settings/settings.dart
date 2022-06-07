@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 
 class Settings {
-  late ThemeMode themeMode;
-  late String themeModeName;
-  Settings() {
-    themeMode = ThemeMode.system;
-    themeModeName = MyThemeMode.getNameThemeMode(themeMode);
+  late ThemeMode _themeMode;
+  ThemeMode get themeMode => _themeMode;
+  set themeMode(ThemeMode tm) {
+    _themeMode = tm;
+    _themeModeName = MyThemeMode.getNameThemeMode(tm);
   }
 
-  Settings.byName({this.themeModeName = MyThemeMode.system}) {
-    themeMode = MyThemeMode.getThemeMode(themeModeName);
+  late String _themeModeName;
+  String get themeModeName => _themeModeName;
+  set themeModeName(String tmn) {
+    _themeModeName = tmn;
+    _themeMode = MyThemeMode.getThemeMode(tmn);
   }
 
-  Settings byThemeMode(ThemeMode themeMode) {
-    return Settings.byName(
-        themeModeName: MyThemeMode.getNameThemeMode(themeMode));
+  Settings({ThemeMode themeMode = ThemeMode.system}) {
+    this.themeMode = ThemeMode.system;
+  }
+
+  Settings.byThemeModeName({String themeModeName = MyThemeMode.system}) {
+    this.themeModeName = themeModeName;
   }
 }
 

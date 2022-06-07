@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/repository/settings_repository.dart';
 import 'package:task_for_irene/src/repository/task_repository.dart';
 import 'package:task_for_irene/src/settings/settings.dart';
+import 'package:task_for_irene/src/task/task.dart';
 
 import 'calendar/calendar_controller.dart';
 import 'calendar/utilits/current_period.dart';
-import 'models/task.dart';
 
 class AppController with ChangeNotifier {
   AppController({required this.settingsRepository, required this.repository});
@@ -26,11 +26,11 @@ class AppController with ChangeNotifier {
   Future<void> updateThemeMode(ThemeMode? newThemeMode) async {
     if (newThemeMode == null) return;
 
-    if (newThemeMode == themeMode) return;
+    if (newThemeMode == _settings.themeMode) return;
 
     _settings.themeMode = newThemeMode;
 
-    await settingsRepository.write(_settings.byThemeMode(newThemeMode));
+    await settingsRepository.write(_settings);
 
     notifyListeners();
   }

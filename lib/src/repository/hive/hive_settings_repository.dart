@@ -47,7 +47,7 @@ class SettingsAdapter extends TypeAdapter<Settings> {
   @override
   Settings read(BinaryReader reader) {
     var themeModeName = reader.readString();
-    return Settings.byName(themeModeName: themeModeName);
+    return Settings.byThemeModeName(themeModeName: themeModeName);
   }
 
   @override

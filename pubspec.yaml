@@ -12,11 +12,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^9.6.0
   flutter_localizations:
     sdk: flutter
   hive: ^2.2.1
   hive_flutter: ^1.1.0
   image_picker: ^0.8.5+3
+  timezone: ^0.8.0
 
 dev_dependencies:
   flutter_test:

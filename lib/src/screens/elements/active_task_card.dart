@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/task.dart';
+import 'package:task_for_irene/src/task/task.dart';
 import '../../navigation/nav_route.dart';
 import '../../utilits/format_date.dart';
 import 'action_button.dart';

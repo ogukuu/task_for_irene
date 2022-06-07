@@ -2,6 +2,7 @@
     package="com.example.task_for_irene">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <application
         android:label="task_for_irene"
         android:name="${applicationName}"
@@ -32,5 +33,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <service
+            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"        
+            android:exported="false"
+            android:stopWithTask="false"/>
     </application>
 </manifest>

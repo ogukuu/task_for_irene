@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/screens/elements/active_task_card.dart';
-import '../../models/task.dart';
+import 'package:task_for_irene/src/task/task.dart';
 
 class ActiveTasksList extends StatelessWidget {
   const ActiveTasksList({Key? key, required this.tasks}) : super(key: key);

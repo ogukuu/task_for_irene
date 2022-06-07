@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:task_for_irene/src/calendar/forms/sub_period.dart';
 import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 import 'package:task_for_irene/src/global_var.dart';
-import 'package:task_for_irene/src/models/task.dart';
 import 'package:task_for_irene/src/navigation/nav_route.dart';
+import 'package:task_for_irene/src/task/task.dart';
 import 'package:task_for_irene/src/utilits/format_date.dart';
 
 class HourOfTheDay extends StatelessWidget {

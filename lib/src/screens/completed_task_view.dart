@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/utilits/task_utilits.dart';
-
-import '../models/task.dart';
+import 'package:task_for_irene/src/task/task.dart';
+import 'package:task_for_irene/src/task/task_utilits.dart';
 
 class CompletedTaskView extends StatelessWidget {
   const CompletedTaskView({Key? key, required this.task}) : super(key: key);

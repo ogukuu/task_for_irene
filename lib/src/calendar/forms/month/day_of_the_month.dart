@@ -23,9 +23,12 @@ class DayOfTheMonth extends StatelessWidget {
     bool isTask = GlobalVar.appController.isTaskForThisDay(date);
     Brightness brightness =
         GlobalVar.appController.getCurrentBrightness(context);
+    double width = maxWidth / 7;
+    double height = width * GlobalVar.goldenRatio * 0.5;
     return SubPeriod(
         onActive: active,
-        width: maxWidth / 7,
+        width: width,
+        height: height,
         onTap: () => controller.down(date),
         onLongPress: () {
           Navigator.restorablePushNamed(

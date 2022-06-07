@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_irene/src/task/task.dart';
 import 'package:task_for_irene/src/utilits/uuid.dart';
-
-import '../models/task.dart';
 
 Widget getStatusImage({required String status, dynamic photoProof}) {
   switch (status) {

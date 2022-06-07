@@ -1,4 +1,4 @@
-import '../models/task.dart';
+import 'package:task_for_irene/src/task/task.dart';
 
 abstract class TaskRepository {
   List<Task> getAll();
