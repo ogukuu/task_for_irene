@@ -47,7 +47,7 @@ class CalendarTopBar extends StatelessWidget {
           _upTitle(context),
           style: Theme.of(context).textTheme.button,
           overflow: TextOverflow.ellipsis,
-          textScaleFactor: 1.3,
+          textScaleFactor: 1.2,
         ));
   }
 

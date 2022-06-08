@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/push/notification_api.dart';
 import 'package:task_for_irene/src/push/notifications_utilits.dart';
 import 'package:task_for_irene/src/task/task.dart';
+import 'package:task_for_irene/src/calendar/utilits/calendar_utilits.dart';
 
 class NotificationsController {
   // _______SETTINGS_______
@@ -32,8 +32,6 @@ class NotificationsController {
 
   final Map<String, Notification> _notifications = {};
 
-  final Map<String, List<int>> _ids = {};
-
   // _______NOTIFICATION CONTROLLER API_______
 
   void init() {
@@ -43,6 +41,7 @@ class NotificationsController {
   /// to create a database of notification
   void initState({required List<Task> activeTasks}) async {
     counter = 0;
+    _stopAllNotification();
     for (var task in activeTasks) {
       await _addNotifications(task: task);
     }
@@ -58,7 +57,6 @@ class NotificationsController {
   void completeTask(String idTask) {
     _stopNotificationsByIdTask(idTask: idTask);
     _notifications.remove(idTask);
-    _ids.remove(idTask);
   }
 
   void updateTask(Task task) {
@@ -72,19 +70,20 @@ class NotificationsController {
   Future<void> _addNotifications({required Task task}) async {
     if (task.isCompleted) return;
     _notifications[task.id] = Notification(task, _notificationTriggerTime);
-    _ids[task.id] =
-        List.generate(_notifications[task.id]!.dates.length, (index) {
-      counter += 1;
-      return counter;
-    });
+    _notifications[task.id]!.id = counter;
+    counter++;
+    if (_notifications[task.id]!.reminderFrequency == ReminderFrequency.month) {
+      _notifications[task.id]!.addId = counter;
+      counter++;
+    }
   }
 
   /// stop notification by task.id
   void _stopNotificationsByIdTask({required String idTask}) {
     if (!_notifications.containsKey(idTask)) return;
-    List<int> ids = _ids[idTask]!;
-    for (var id in ids) {
-      _notificationApi.stopNotification(id);
+    _notificationApi.stopNotification(_notifications[idTask]!.id);
+    if (_notifications[idTask]!.id != _notifications[idTask]!.addId) {
+      _notificationApi.stopNotification(_notifications[idTask]!.addId);
     }
   }
 
@@ -92,11 +91,61 @@ class NotificationsController {
   Future<void> _startNotificationByIdTask({required String idTask}) async {
     if (!_notifications.containsKey(idTask)) return;
     Notification n = _notifications[idTask]!;
-    List<int> ids = _ids[idTask]!;
-    for (int i = 0; i < n.dates.length; i++) {
-      _notificationApi.showScheduledNotification(
-          scheduledDate: n.dates[i], title: n.title, body: n.body, id: ids[i]);
+    switch (n.reminderFrequency) {
+      case ReminderFrequency.day:
+        _notificationApi.scheduleDailyNotification(
+            id: n.id, title: n.title, body: n.body, dueDate: n.dueDate);
+        break;
+      case ReminderFrequency.week:
+        _notificationApi.scheduleWeeklyNotification(
+            id: n.id, title: n.title, body: n.body, dueDate: n.dueDate);
+        break;
+      case ReminderFrequency.month:
+        if (_getFirstDateMonthly(n.dueDate).isAfter(DateTime.now())) {
+          _notificationApi.showScheduledNotification(
+              id: n.id,
+              title: n.title,
+              body: n.body,
+              dueDate: _getFirstDateMonthly(n.dueDate));
+        }
+        if (_getSecondDateMonthly(n.dueDate).isAfter(DateTime.now())) {
+          _notificationApi.showScheduledNotification(
+              id: n.addId,
+              title: n.title,
+              body: n.body,
+              dueDate: _getSecondDateMonthly(n.dueDate));
+        }
+        break;
     }
+  }
+
+  DateTime _getFirstDateMonthly(DateTime dueDate) {
+    final List<DateTime> dates = [];
+    DateTime tempDay = dueDate.subtract(const Duration(days: 1));
+    final DateTime now = DateTime.now();
+    while (tempDay.isAfter(now)) {
+      dates.add(tempDay);
+      tempDay = DateTime(tempDay.year, CalendarUtilits.prevMonth(tempDay.month),
+          tempDay.day, tempDay.hour, tempDay.minute);
+    }
+    return (dates.isNotEmpty)
+        ? dates.last
+        : now.subtract(const Duration(days: 1));
+  }
+
+  DateTime _getSecondDateMonthly(DateTime dueDate) {
+    final List<DateTime> dates = [];
+    DateTime tempDay = dueDate.subtract(const Duration(days: 1));
+    final DateTime now = DateTime.now();
+    while (tempDay.isAfter(now)) {
+      dates.add(tempDay);
+      tempDay = DateTime(tempDay.year, CalendarUtilits.prevMonth(tempDay.month),
+          tempDay.day, tempDay.hour, tempDay.minute);
+    }
+    if ((dates.isNotEmpty) && (dates.length > 2)) {
+      return dates[dates.length - 2];
+    }
+    return now.subtract(const Duration(days: 1));
   }
 
   /// when changing notification settings
@@ -118,15 +167,7 @@ class NotificationsController {
   /// start all notification
   Future<void> _startAllNotification() async {
     for (var id in _notifications.keys) {
-      Notification n = _notifications[id]!;
-      List<int> ids = _ids[id]!;
-      for (int i = 0; i < n.dates.length; i++) {
-        _notificationApi.showScheduledNotification(
-            scheduledDate: n.dates[i],
-            title: n.title,
-            body: n.body,
-            id: ids[i]);
-      }
+      _startNotificationByIdTask(idTask: id);
     }
   }
 }
@@ -134,41 +175,21 @@ class NotificationsController {
 class Notification {
   late final String title;
   late final String body;
-  final List<DateTime> dates = [];
+  late final DateTime dueDate;
+  late final String reminderFrequency;
+  int _id = 0;
+  int get id => _id;
+  set id(int i) => {
+        _id = i,
+        if (addId == 0) {addId = i}
+      };
+  int addId = 0;
+
   Notification(Task task, TimeOfDay notificationTriggerTime) {
     title = getTitleNotification(task);
     body = getBodyNotification(task);
-    TimeOfDay time = notificationTriggerTime;
-    DateTime dueDate = task.dueDate;
-    DateTime day = DateTime(
-            dueDate.year, dueDate.month, dueDate.day, time.hour, time.minute)
-        .subtract(const Duration(days: 1));
-    switch (task.reminderFrequency) {
-      case ReminderFrequency.day:
-        {
-          while (day.isAfter(DateTime.now())) {
-            dates.add(day);
-            day = day.subtract(const Duration(days: 1));
-          }
-          break;
-        }
-      case ReminderFrequency.week:
-        {
-          while (day.isAfter(DateTime.now())) {
-            dates.add(day);
-            day = day.subtract(const Duration(days: 7));
-          }
-          break;
-        }
-      case ReminderFrequency.month:
-        {
-          while (day.isAfter(DateTime.now())) {
-            dates.add(day);
-            day = DateTime(day.year, CalendarUtilits.prevMonth(day.month),
-                day.day, day.hour, day.minute);
-          }
-          break;
-        }
-    }
+    dueDate = DateTime(task.dueDate.year, task.dueDate.month, task.dueDate.day,
+        notificationTriggerTime.hour, notificationTriggerTime.minute);
+    reminderFrequency = task.reminderFrequency;
   }
 }
