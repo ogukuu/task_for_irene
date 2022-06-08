@@ -13,6 +13,11 @@ class SettingsView extends StatelessWidget {
   void selectTime(BuildContext context) async {
     final TimeOfDay? selected = await showTimePicker(
         context: context, initialTime: settings.notificationTriggerTime);
+    if (selected != null) {
+      await GlobalVar.appController.push.showNotification(
+          title: "Change notofications time",
+          body: "New time of notifiction: ${getHHMMTimeOfDay(selected)}");
+    }
     GlobalVar.appController.updateNotificationTriggerTime(selected);
   }
 

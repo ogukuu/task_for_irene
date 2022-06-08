@@ -5,32 +5,30 @@ import 'package:timezone/data/latest.dart' as tz;
 class NotificationApi {
   static const String channelId = "PushTaskForIreneId";
   static const String channelName = "PushTaskForIreneName";
-  static const String channelDescription =
-      "TaskForIrene channel for task notification";
+  static const String channelDescription = "channelDescription";
 
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  Future _notificationDetails() async {
-    return const NotificationDetails(
-        android: AndroidNotificationDetails(channelId, channelName,
-            channelDescription: channelDescription,
-            importance: Importance.max,
-            priority: Priority.high));
-  }
+  static const NotificationDetails _notificationDetails = NotificationDetails(
+      android: AndroidNotificationDetails(channelId, channelName,
+          channelDescription: channelDescription,
+          importance: Importance.max,
+          priority: Priority.high));
 
-  Future showNotification({int id = 0, String? title, String? body}) async =>
-      _flutterLocalNotificationsPlugin.show(
-          id, title, body, await _notificationDetails());
+  Future<void> showNotification(
+          {int id = 0, String? title, String? body}) async =>
+      await _flutterLocalNotificationsPlugin.show(
+          id, title, body, _notificationDetails);
 
-  void showScheduledNotification(
+  Future<void> showScheduledNotification(
           {required int id,
           required String title,
           required String body,
           required DateTime dueDate,
           String? payload}) async =>
-      _flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
-          tz.TZDateTime.from(dueDate, tz.local), await _notificationDetails(),
+      await _flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
+          tz.TZDateTime.from(dueDate, tz.local), _notificationDetails,
           androidAllowWhileIdle: true,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
@@ -39,7 +37,7 @@ class NotificationApi {
   late InitializationSettings _initializationSettings;
 
   final AndroidInitializationSettings _initializationSettingsAndroid =
-      const AndroidInitializationSettings('@mipmap/ic_launcher');
+      const AndroidInitializationSettings('@mipmap/notification2');
 
   void init() {
     _initializationSettings =
@@ -66,7 +64,7 @@ class NotificationApi {
       required DateTime dueDate,
       String? payload}) async {
     await _flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
-        _nextInstanceOfDaily(dueDate: dueDate), await _notificationDetails(),
+        _nextInstanceOfDaily(dueDate: dueDate), _notificationDetails,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -75,13 +73,13 @@ class NotificationApi {
   }
 
   tz.TZDateTime _nextInstanceOfDaily({required DateTime dueDate}) {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-        tz.local, now.year, now.month, now.day, dueDate.hour, dueDate.minute);
+    final DateTime now = DateTime.now();
+    DateTime scheduledDate =
+        DateTime(now.year, now.month, now.day, dueDate.hour, dueDate.minute);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    return scheduledDate;
+    return tz.TZDateTime.from(scheduledDate, tz.local);
   }
 
   /// Weekly
@@ -92,7 +90,7 @@ class NotificationApi {
       required DateTime dueDate,
       String? payload}) async {
     await _flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
-        _nextInstanceOfWeekly(dueDate: dueDate), await _notificationDetails(),
+        _nextInstanceOfWeekly(dueDate: dueDate), _notificationDetails,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -102,16 +100,16 @@ class NotificationApi {
 
   tz.TZDateTime _nextInstanceOfWeekly({required DateTime dueDate}) {
     final int dayOfTheWeek = dueDate.subtract(const Duration(days: 1)).weekday;
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-        tz.local, now.year, now.month, now.day, dueDate.hour, dueDate.minute);
+    final DateTime now = DateTime.now();
+    DateTime scheduledDate =
+        DateTime(now.year, now.month, now.day, dueDate.hour, dueDate.minute);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     while (scheduledDate.weekday != dayOfTheWeek) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    return scheduledDate;
+    return tz.TZDateTime.from(scheduledDate, tz.local);
   }
 
   /// Monthly not work
@@ -122,7 +120,7 @@ class NotificationApi {
       required DateTime dueDate,
       String? payload}) async {
     await _flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
-        _nextInstanceOfMonthly(dueDate: dueDate), await _notificationDetails(),
+        _nextInstanceOfMonthly(dueDate: dueDate), _notificationDetails,
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -143,4 +141,7 @@ class NotificationApi {
     }
     return scheduledDate;
   }
+
+  Future<List<PendingNotificationRequest>> get allActiveNotification =>
+      _flutterLocalNotificationsPlugin.pendingNotificationRequests();
 }

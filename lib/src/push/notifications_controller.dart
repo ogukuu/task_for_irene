@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:task_for_irene/src/global_var.dart';
 import 'package:task_for_irene/src/push/notification_api.dart';
 import 'package:task_for_irene/src/push/notifications_utilits.dart';
@@ -28,7 +29,7 @@ class NotificationsController {
 
   // _______NOTIFICATION DATABASE
 
-  int counter = 0;
+  int counter = 1;
 
   final Map<String, Notification> _notifications = {};
 
@@ -40,8 +41,13 @@ class NotificationsController {
 
   /// to create a database of notification
   void initState({required List<Task> activeTasks}) async {
-    counter = 0;
-    _stopAllNotification();
+    counter = 1;
+    //_stopAllNotification();
+    List<PendingNotificationRequest> allActiveNotification =
+        await _notificationApi.allActiveNotification;
+    if (allActiveNotification.isNotEmpty) {
+      _stopAllNotification();
+    }
     for (var task in activeTasks) {
       await _addNotifications(task: task);
     }
@@ -93,23 +99,23 @@ class NotificationsController {
     Notification n = _notifications[idTask]!;
     switch (n.reminderFrequency) {
       case ReminderFrequency.day:
-        _notificationApi.scheduleDailyNotification(
+        await _notificationApi.scheduleDailyNotification(
             id: n.id, title: n.title, body: n.body, dueDate: n.dueDate);
         break;
       case ReminderFrequency.week:
-        _notificationApi.scheduleWeeklyNotification(
+        await _notificationApi.scheduleWeeklyNotification(
             id: n.id, title: n.title, body: n.body, dueDate: n.dueDate);
         break;
       case ReminderFrequency.month:
         if (_getFirstDateMonthly(n.dueDate).isAfter(DateTime.now())) {
-          _notificationApi.showScheduledNotification(
+          await _notificationApi.showScheduledNotification(
               id: n.id,
               title: n.title,
               body: n.body,
               dueDate: _getFirstDateMonthly(n.dueDate));
         }
         if (_getSecondDateMonthly(n.dueDate).isAfter(DateTime.now())) {
-          _notificationApi.showScheduledNotification(
+          await _notificationApi.showScheduledNotification(
               id: n.addId,
               title: n.title,
               body: n.body,
@@ -156,7 +162,10 @@ class NotificationsController {
 
   /// stop all notification
   void _stopAllNotification() {
-    _notificationApi.stopAllNotification();
+    //_notificationApi.stopAllNotification();
+    for (var e in _notifications.keys) {
+      _stopNotificationsByIdTask(idTask: e);
+    }
   }
 
   /// recreating the database of notifications
